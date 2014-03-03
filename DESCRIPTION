@@ -1,0 +1,11 @@
+Package: arps
+Version: 0.5-1
+Date: 2014-03-03
+Title: Arps Decline Curve Analysis
+Authors@R: c(person("Derrick", "Turk", role = c("aut", "cre", "cph"),
+                     email = "dwt@terminusdatascience.com"))
+Depends:
+Description: Functions for Arps decline-curve analysis.
+License: LGPL-2.1
+URL: http://www.github.com/???
+BugReports: http://www.github.com/???
