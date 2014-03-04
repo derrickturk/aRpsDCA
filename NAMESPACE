@@ -1,3 +1,14 @@
 export(
-    exponential.q
+    exponential.q,
+    exponential.Np,
+    hyperbolic.q,
+    hyperbolic.Np,
+    hyperbolic.D,
+    harmonic.q,
+    harmonic.Np,
+    harmonic.D,
+    hyp2exp.transition,
+    hyp2exp.q,
+    hyp2exp.Np,
+    hyp2exp.D
 )
