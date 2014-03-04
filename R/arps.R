@@ -88,3 +88,44 @@ hyp2exp.D <- function (qi, Di, b, Df, t)
 
     D
 }
+
+# from tangent effective
+as.nominal <- function (D.eff, from.period="year", to.period="year")
+{
+    rescale.by.time(-log(1 - D.eff), from.period, to.period)
+}
+
+# to tangent effective
+as.effective <- function (D.nom, from.period="year", to.period="year")
+{
+        1 - exp(-rescale.by.time(D.nom, from.period, to.period))
+}
+
+rescale.by.time <- function (value, from.period="year", to.period="year")
+{
+    if (from.period == to.period)
+        value
+    else if (from.period == "year") {
+        if (to.period == "month")
+            value / 12
+        else if (to.period == "day")
+            value / 365.25
+        else
+            stop("Invalid to.period.")
+    } else if (from.period == "month") {
+        if (to.period == "year")
+            value * 12
+        else if (to.period == "day")
+            value / 30.4375
+        else
+            stop("Invalid to.period.")
+    } else if (from.period == "day") {
+        if (to.period == "year")
+            value * 365.25
+        else if (to.period == "month")
+            value * 30.4375
+        else
+            stop("Invalid to.period.")
+    } else
+        stop("Invalid from.period.")
+}

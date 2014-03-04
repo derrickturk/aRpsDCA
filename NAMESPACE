@@ -10,5 +10,8 @@ export(
     hyp2exp.transition,
     hyp2exp.q,
     hyp2exp.Np,
-    hyp2exp.D
+    hyp2exp.D,
+    as.nominal,
+    as.effective,
+    rescale.by.time
 )
