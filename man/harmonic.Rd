@@ -13,7 +13,7 @@
 \usage{
     harmonic.q(qi, Di, t)
     harmonic.Np(qi, Di, t)
-    harmonic.D(qi, Di, t)
+    harmonic.D(Di, t)
 }
 
 \arguments{

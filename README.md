@@ -12,4 +12,4 @@ aRpsDCA provides functions to compute rate and cumulative production over time, 
 
 aRpsDCA is currently released under the LGPL v2.1 pending further review.
 
-(c) 2014 dwt | terminus data science, LLC
+(c) 2014 [dwt](http://www.github.com/derrickturk) | [terminus data science, LLC](http://www.terminusdatascience.com)

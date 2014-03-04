@@ -110,7 +110,7 @@ hyp2exp.D <- function (qi, Di, b, Df, t)
 
 # from tangent effective
 as.nominal <- function (D.eff,
-                        from.period=c("year", "month", "day")
+                        from.period=c("year", "month", "day"),
                         to.period=c("year", "month", "day"))
 {
     rescale.by.time(-log(1 - D.eff), from.period, to.period)
@@ -125,9 +125,9 @@ as.effective <- function (D.nom,
 }
 
 rescale.by.time <- function (value,
-                             from.period=c("year", "month", "day")
+                             from.period=c("year", "month", "day"),
                              to.period=c("year", "month", "day"),
-                             method=c("decline", "rate", "time")
+                             method=c("decline", "rate", "time"))
 {
     from.period <- match.arg(from.period)
     to.period <- match.arg(to.period)

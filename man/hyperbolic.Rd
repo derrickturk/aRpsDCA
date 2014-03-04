@@ -13,7 +13,7 @@
 \usage{
     hyperbolic.q(qi, Di, b, t)
     hyperbolic.Np(qi, Di, b, t)
-    hyperbolic.D(qi, Di, b, t)
+    hyperbolic.D(Di, b, t)
 }
 
 \arguments{
