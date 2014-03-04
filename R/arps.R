@@ -59,32 +59,32 @@ hyp2exp.transition <- function (qi, Di, b, Df)
 hyp2exp.q <- function (qi, Di, b, Df, t)
 {
     t.trans <- hyp2exp.transition(qi, Di, b, Df)
-    if (t <= t.trans) {
-        hyperbolic.q(qi, Di, b, t)
-    } else {
-        q.trans <- hyperbolic.q(qi, Di, b, t.trans)
-        exponential.q(q.trans, Df, t - t.trans)
-    }
+    q.trans <- hyperbolic.q(qi, Di, b, t.trans)
+
+    q <- hyperbolic.q(qi, Di, b, t)
+    q[t > t.trans] <- exponential.q(q.trans, Df, t[t > t.trans] - t.trans)
+
+    q
 }
 
 hyp2exp.Np <- function (qi, Di, b, Df, t)
 {
     t.trans <- hyp2exp.transition(qi, Di, b, Df)
-    if (t <= t.trans) {
-        hyperbolic.Np(qi, Di, b, t)
-    } else {
-        q.trans <- hyperbolic.q(qi, Di, b, t.trans)
-        Np.trans <- hyperbolic.Np(qi, Di, b, t.trans)
-        Np.trans + exponential.Np(q.trans, Df, t - t.trans)
-    }
+    q.trans <- hyperbolic.q(qi, Di, b, t.trans)
+    Np.trans <- hyperbolic.Np(qi, Di, b, t.trans)
+
+    Np <- hyperbolic.Np(qi, Di, b, t)
+    Np[t > t.trans] <- Np.trans
+        + exponential.Np(q.trans, Df, t[t > t.trans] - t.trans)
+
+    Np
 }
 
 hyp2exp.D <- function (qi, Di, b, Df, t)
 {
     t.trans <- hyp2exp.transition(qi, Di, b, Df)
-    if (t <= t.trans) {
-        hyperbolic.D(qi, Di, b, t)
-    } else {
-        Df
-    }
+    D <- hyperbolic.D(qi, Di, b, t)
+    D[t > t.trans] <- Df
+
+    D
 }
