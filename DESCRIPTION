@@ -1,11 +1,11 @@
-Package: arps
+Package: aRpsDCA
 Version: 0.5-1
 Date: 2014-03-03
-Title: Arps Decline Curve Analysis
+Title: Arps Decline Curve Analysis in R
 Authors@R: c(person("Derrick", "Turk", role = c("aut", "cre", "cph"),
                      email = "dwt@terminusdatascience.com"))
 Depends:
-Description: Functions for Arps decline-curve analysis.
+Description: Functions for Arps decline-curve analysis. Includes exponential, hyperbolic, harmonic, and hyperbolic-to-exponential models.
 License: LGPL-2.1
-URL: http://www.github.com/???
-BugReports: http://www.github.com/???
+URL: https://github.com/derrickturk/aRpsDCA
+BugReports: https://github.com/derrickturk/aRpsDCA/issues
