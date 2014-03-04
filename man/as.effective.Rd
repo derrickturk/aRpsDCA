@@ -24,7 +24,7 @@
 }
 
 \details{
-    The result should be applied as a tangent effective decline (see SPEE REP#6 [\link{https://secure.spee.org/sites/default/files/wp-files/pdf/ReferencesResources/REP06-DeclineCurves.pdf}]) specified in fractional (i.e. 95\% = 0.95) units.
+    The result should be applied as a tangent effective decline (see SPEE REP#6 [\url{https://secure.spee.org/sites/default/files/wp-files/pdf/ReferencesResources/REP06-DeclineCurves.pdf}]) specified in fractional (i.e. 95\% = 0.95) units.
 
     When appropriate, internally uses \code{\link{rescale.by.time}} to perform time unit conversion.
 }

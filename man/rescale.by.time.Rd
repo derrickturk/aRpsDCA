@@ -11,7 +11,7 @@
     rescale.by.time(value,
         from.period=c("year", "month", "day"),
         to.period=c("year", "month", "day"),
-        method=c("rate", "decline", "time"))
+        method=c("decline", "rate", "time"))
 }
 
 \arguments{

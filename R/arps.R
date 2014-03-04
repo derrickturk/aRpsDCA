@@ -109,20 +109,30 @@ hyp2exp.D <- function (qi, Di, b, Df, t)
 }
 
 # from tangent effective
-as.nominal <- function (D.eff, from.period="year", to.period="year")
+as.nominal <- function (D.eff,
+                        from.period=c("year", "month", "day")
+                        to.period=c("year", "month", "day"))
 {
     rescale.by.time(-log(1 - D.eff), from.period, to.period)
 }
 
 # to tangent effective
-as.effective <- function (D.nom, from.period="year", to.period="year")
+as.effective <- function (D.nom,
+                          from.period=c("year", "month", "day"),
+                          to.period=c("year", "month", "day"))
 {
-        1 - exp(-rescale.by.time(D.nom, from.period, to.period))
+    1 - exp(-rescale.by.time(D.nom, from.period, to.period))
 }
 
-rescale.by.time <- function (value, from.period="year", to.period="year",
-                             method="decline")
+rescale.by.time <- function (value,
+                             from.period=c("year", "month", "day")
+                             to.period=c("year", "month", "day"),
+                             method=c("decline", "rate", "time")
 {
+    from.period <- match.arg(from.period)
+    to.period <- match.arg(to.period)
+    method <- match.arg(method)
+
     if (method == "time") {
         tmp <- from.period
         from.period <- to.period
