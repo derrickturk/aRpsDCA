@@ -70,14 +70,14 @@ hyperbolic.D <- function (Di, b, t)
     Di / (1 + b * Di * t)
 }
 
-hyp2exp.transition <- function (qi, Di, b, Df)
+hyp2exp.transition <- function (Di, b, Df)
 {
     (Di / Df - 1) / (b * Di)
 }
 
 hyp2exp.q <- function (qi, Di, b, Df, t)
 {
-    t.trans <- hyp2exp.transition(qi, Di, b, Df)
+    t.trans <- hyp2exp.transition(Di, b, Df)
     q.trans <- hyperbolic.q(qi, Di, b, t.trans)
 
     q <- hyperbolic.q(qi, Di, b, t)
@@ -88,7 +88,7 @@ hyp2exp.q <- function (qi, Di, b, Df, t)
 
 hyp2exp.Np <- function (qi, Di, b, Df, t)
 {
-    t.trans <- hyp2exp.transition(qi, Di, b, Df)
+    t.trans <- hyp2exp.transition(Di, b, Df)
     q.trans <- hyperbolic.q(qi, Di, b, t.trans)
     Np.trans <- hyperbolic.Np(qi, Di, b, t.trans)
 
@@ -99,9 +99,9 @@ hyp2exp.Np <- function (qi, Di, b, Df, t)
     Np
 }
 
-hyp2exp.D <- function (qi, Di, b, Df, t)
+hyp2exp.D <- function (Di, b, Df, t)
 {
-    t.trans <- hyp2exp.transition(qi, Di, b, Df)
+    t.trans <- hyp2exp.transition(Di, b, Df)
     D <- hyperbolic.D(Di, b, t)
     D[t > t.trans] <- Df
 

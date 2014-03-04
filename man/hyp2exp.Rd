@@ -14,8 +14,8 @@
 \usage{
     hyp2exp.q(qi, Di, b, Df, t)
     hyp2exp.Np(qi, Di, b, Df, t)
-    hyp2exp.D(qi, Di, b, Df, t)
-    hyp2exp.transition(qi, Di, b, Df)
+    hyp2exp.D(Di, b, Df, t)
+    hyp2exp.transition(Di, b, Df)
 }
 
 \arguments{
@@ -65,7 +65,7 @@
 
     ## Di = 85% effective / year, b = 1.5, Df = 15% effective / year,
     ## t = 6 and 48 months
-    hyp2exp.D(as.nominal(0.85), 1.5, c(0.5, 4))
+    hyp2exp.D(as.nominal(0.85), 1.5, as.nominal(0.15), c(0.5, 4))
 
     ## Di = 85% effective / year, b = 1.5, Df = 5% effective / year
     hyp2exp.transition(as.nominal(0.85), 1.5, as.nominal(0.05))

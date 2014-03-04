@@ -13,48 +13,37 @@ Functions for Arps decline-curve analysis. Includes exponential, hyperbolic, har
 }
 
 \details{
-\tabular{ll}{
-Package: \tab aRpsDCA\cr
-Version: \tab 0.1.0\cr
-Date: \tab 2014-03-03\cr
-Authors@R: \tab c(person("Derrick", "Turk", role = c("aut", "cre", "cph"),
-                     email = "dwt@terminusdatascience.com"))\cr
-Depends: \tab \cr
-License: \tab file LICENSE\cr
-License_is_FOSS: \tab yes\cr
-License_restricts_use: \tab yes\cr
-URL: \tab https://github.com/derrickturk/aRpsDCA\cr
-BugReports: \tab https://github.com/derrickturk/aRpsDCA/issues\cr
-Packaged: \tab 2014-03-04 20:18:28 UTC; derrick.turk\cr
-Built: \tab R 3.0.2; ; 2014-03-04 20:18:35 UTC; windows\cr
-}
-
 Index:
-\preformatted{
-as.effective            Arps decline conversion from nominal to
-                        effective
-as.nominal              Arps decline conversion from effective to
-                        nominal
-exponential             Arps exponential declines
-harmonic                Arps harmonic declines
-hyp2exp                 Arps hyperbolic-to-exponential declines
-hyperbolic              Arps hyperbolic declines
-rescale.by.time         Time unit conversion for DCA
+\tabular{ll}{
+\code{\link{as.effective}}     \tab   Arps decline conversion from nominal to effective \cr
+\code{\link{as.nominal}}       \tab   Arps decline conversion from effective to nominal \cr
+\code{\link{exponential}}      \tab   Arps exponential declines \cr
+\code{\link{harmonic}}         \tab   Arps harmonic declines \cr
+\code{\link{hyp2exp}}          \tab   Arps hyperbolic-to-exponential declines \cr
+\code{\link{hyperbolic}}       \tab   Arps hyperbolic declines \cr
+\code{\link{rescale.by.time}}  \tab   Time unit conversion for DCA \cr
 }
 }
 
 \author{
-Derrick Turk [aut, cre, cph]
-
-Maintainer: Derrick Turk <dwt@terminusdatascience.com>
+Derrick Turk | \bold{terminus data science, LLC} <\email{dwt@terminusdatascience.com}>
 }
 
 \references{
-~~ Literature or other references for background information ~~
+    SPEE REP#6 (\url{https://secure.spee.org/sites/default/files/wp-files/pdf/ReferencesResources/REP06-DeclineCurves.pdf})
 }
 
 \keyword{ package }
 
 \examples{
-~~ simple examples of the most important functions ~~
+    ## Plot semi-log rate-time and Cartesian rate-cumulative
+    ## for a hyperbolic-to-exponential decline
+    t <- seq(0, 10, 0.5)
+    q <- hyp2exp.q(5000, as.nominal(0.90), 1.5, as.nominal(0.10), t)
+    Np <- hyp2exp.Np(5000, as.nominal(0.90), 1.5, as.nominal(0.10), t)
+
+    old.par <- par(ask=TRUE)
+    plot(log(q) ~ t)
+    plot(q ~ Np)
+    par(old.par)
 }
