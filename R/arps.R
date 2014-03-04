@@ -40,9 +40,9 @@ harmonic.Np <- function (qi, Di, t)
     qi / Di * log(1 + Di * t)
 }
 
-harmonic.D <- function (qi, Di, t)
+harmonic.D <- function (Di, t)
 {
-    hyperbolic.D(qi, Di, 1, t)
+    hyperbolic.D(Di, 1, t)
 }
 
 hyperbolic.q <- function (qi, Di, b, t)
@@ -65,7 +65,7 @@ hyperbolic.Np <- function (qi, Di, b, t)
         (qi / ((1 - b) * Di)) * (1 - (1 + b * Di * t) ^ (1 - (1/b)))
 }
 
-hyperbolic.D <- function (qi, Di, b, t)
+hyperbolic.D <- function (Di, b, t)
 {
     Di / (1 + b * Di * t)
 }
@@ -102,7 +102,7 @@ hyp2exp.Np <- function (qi, Di, b, Df, t)
 hyp2exp.D <- function (qi, Di, b, Df, t)
 {
     t.trans <- hyp2exp.transition(qi, Di, b, Df)
-    D <- hyperbolic.D(qi, Di, b, t)
+    D <- hyperbolic.D(Di, b, t)
     D[t > t.trans] <- Df
 
     D
@@ -120,8 +120,22 @@ as.effective <- function (D.nom, from.period="year", to.period="year")
         1 - exp(-rescale.by.time(D.nom, from.period, to.period))
 }
 
-rescale.by.time <- function (value, from.period="year", to.period="year")
+rescale.by.time <- function (value, from.period="year", to.period="year",
+                             method="decline")
 {
+    if (method == "time") {
+        tmp <- from.period
+        from.period <- to.period
+        to.period <- tmp
+        stop.to <- "Invalid from.period."
+        stop.from <- "Invalid to.period."
+    } else if (method != "decline" && method != "rate") {
+        stop("Invalid method.")
+    } else {
+        stop.to <- "Invalid to.period."
+        stop.from <- "Invalid from.period."
+    }
+
     if (from.period == to.period)
         value
     else if (from.period == "year") {
@@ -130,21 +144,21 @@ rescale.by.time <- function (value, from.period="year", to.period="year")
         else if (to.period == "day")
             value / 365.25
         else
-            stop("Invalid to.period.")
+            stop(stop.to)
     } else if (from.period == "month") {
         if (to.period == "year")
             value * 12
         else if (to.period == "day")
             value / 30.4375
         else
-            stop("Invalid to.period.")
+            stop(stop.to)
     } else if (from.period == "day") {
         if (to.period == "year")
             value * 365.25
         else if (to.period == "month")
             value * 30.4375
         else
-            stop("Invalid to.period.")
+            stop(stop.to)
     } else
-        stop("Invalid from.period.")
+        stop(stop.from)
 }
