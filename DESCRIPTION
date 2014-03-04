@@ -1,5 +1,5 @@
 Package: aRpsDCA
-Version: 0.5-1
+Version: 0.1.0
 Date: 2014-03-03
 Title: Arps Decline Curve Analysis in R
 Authors@R: c(person("Derrick", "Turk", role = c("aut", "cre", "cph"),
