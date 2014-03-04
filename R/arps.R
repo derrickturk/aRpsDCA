@@ -93,8 +93,8 @@ hyp2exp.Np <- function (qi, Di, b, Df, t)
     Np.trans <- hyperbolic.Np(qi, Di, b, t.trans)
 
     Np <- hyperbolic.Np(qi, Di, b, t)
-    Np[t > t.trans] <- Np.trans
-        + exponential.Np(q.trans, Df, t[t > t.trans] - t.trans)
+    Np[t > t.trans] <- Np.trans +
+        exponential.Np(q.trans, Df, t[t > t.trans] - t.trans)
 
     Np
 }

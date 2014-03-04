@@ -6,6 +6,8 @@ Authors@R: c(person("Derrick", "Turk", role = c("aut", "cre", "cph"),
                      email = "dwt@terminusdatascience.com"))
 Depends:
 Description: Functions for Arps decline-curve analysis. Includes exponential, hyperbolic, harmonic, and hyperbolic-to-exponential models.
-License: LGPL-2.1
+License: file LICENSE
+License_is_FOSS: yes
+License_restricts_use: yes
 URL: https://github.com/derrickturk/aRpsDCA
 BugReports: https://github.com/derrickturk/aRpsDCA/issues
