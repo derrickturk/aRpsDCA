@@ -1,4 +1,5 @@
 \name{harmonic}
+\alias{harmonic}
 \alias{harmonic.q}
 \alias{harmonic.Np}
 \alias{harmonic.D}

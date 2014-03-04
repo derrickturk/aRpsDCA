@@ -1,4 +1,5 @@
 \name{as.nominal}
+\alias{as.nominal}
 
 \title{Arps decline conversion from effective to nominal}
 

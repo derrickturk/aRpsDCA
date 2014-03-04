@@ -1,4 +1,5 @@
 \name{exponential}
+\alias{exponential}
 \alias{exponential.q}
 \alias{exponential.Np}
 

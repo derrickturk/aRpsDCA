@@ -1,4 +1,5 @@
 \name{rescale.by.time}
+\alias{rescale.by.time}
 
 \title{Time unit conversion for DCA}
 

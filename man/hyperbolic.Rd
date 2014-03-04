@@ -1,4 +1,5 @@
 \name{hyperbolic}
+\alias{hyperbolic}
 \alias{hyperbolic.q}
 \alias{hyperbolic.Np}
 \alias{hyperbolic.D}

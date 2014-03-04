@@ -1,4 +1,5 @@
 \name{as.effective}
+\alias{as.effective}
 
 \title{Arps decline conversion from nominal to effective}
 
@@ -7,7 +8,7 @@
 }
 
 \usage{
-    as.nominal(D.eff,
+    as.effective(D.nom,
         from.period=c("year", "month", "day"),
         to.period=c("year", "month", "day"))
 }
