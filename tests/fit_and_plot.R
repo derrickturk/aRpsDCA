@@ -49,3 +49,21 @@ plot(fitme.hyperbolic.q ~ fitme.hyperbolic.t, main="Hyperbolic Fit",
 lines(arps.q(hyperbolic.fit$decline, fitme.hyperbolic.t) ~ fitme.hyperbolic.t,
       col="red")
 legend("topright", pch=c(1, NA), lty=c(NA, 1), col=c("blue", "red"), legend=c("Actual", "Fit"))
+
+fitme.hyp2exp.t <- seq(0, 5, 1 / 12) # 5 years
+fitme.hyp2exp.q <- hyp2exp.q(
+    1000, # Bbl/d
+    as.nominal(0.70), # / year
+    1.9,
+    as.nominal(0.15), # / year
+    fitme.hyp2exp.t
+) * rnorm(n=length(fitme.hyp2exp.t), mean=1, sd=0.1) # perturb
+
+hyp2exp.fit <- best.hyp2exp(fitme.hyp2exp.q, fitme.hyp2exp.t)
+cat(paste("SSE:", hyp2exp.fit$sse))
+dev.new()
+plot(fitme.hyp2exp.q ~ fitme.hyp2exp.t, main="Hyperbolic-to-Exponential Fit",
+     col="blue", log="y", xlab="Time", ylab="Rate")
+lines(arps.q(hyp2exp.fit$decline, fitme.hyp2exp.t) ~ fitme.hyp2exp.t,
+      col="red")
+legend("topright", pch=c(1, NA), lty=c(NA, 1), col=c("blue", "red"), legend=c("Actual", "Fit"))

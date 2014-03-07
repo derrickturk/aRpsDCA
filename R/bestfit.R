@@ -37,7 +37,7 @@ best.exponential <- function(q, t)
 
                  lower=c( # lower bounds
                    0, # qi > 0
-                   0), # qi < qmax * 3
+                   0), # D > 0
 
                  upper=c( # upper bounds
                    max(q) * 3, # qi < qmax * 3
@@ -65,7 +65,7 @@ best.hyperbolic <- function(q, t)
 
                  lower=c( # lower bounds
                    0,  # qi > 0
-                   0,  # qi < qmax * 3
+                   0,  # Di > 0
                    0), # b > 0
 
                  upper=c( # upper bounds
@@ -75,5 +75,44 @@ best.hyperbolic <- function(q, t)
     )
 
     list(decline=arps.decline(qi=res$par[1], Di=res$par[2], b=res$par[3]),
+         sse=res$objective)
+}
+
+best.hyp2exp <- function(q, t)
+{
+    if (length(q) != length(t) || length(q) <= 1)
+        stop("Invalid lengths for q, t vectors.")
+
+    res <- nlminb(c( # initial guesses
+                   q[1], # qi = q(t = first t in vector)
+                   (log(q[2]) - log(q[1])) / (t[2] - t[1]),
+                         # Di = decline from first to second point
+                   1.5,  # b = right-ish for a lot of wells currently coming on
+                   0.1), # Df = about 9% effective
+
+                    # cost function
+                 function (guess) {
+                     print(guess)
+                     sse(q,
+                         hyp2exp.q(guess[1], guess[2], guess[3], guess[4], t))
+                 },
+
+                 lower=c( # lower bounds
+                   0,  # qi > 0
+                   0.35,  # Di > 0
+                   0,  # b > 0
+                   0), # Df > 0
+
+                 upper=c( # upper bounds
+                   max(q) * 3, # qi < qmax * 3
+                   10, # = 0.99995 / [time] effective
+                   5,  # don't get crazy
+                   0.35) # likewise
+    )
+
+    list(decline=arps.decline(qi=res$par[1],
+                              Di=res$par[2],
+                              b=res$par[3],
+                              Df=res$par[4]),
          sse=res$objective)
 }
