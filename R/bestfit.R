@@ -27,16 +27,13 @@ best.exponential <- function(q, t)
     if (length(q) != length(t) || length(q) <= 1)
         stop("Invalid lengths for q, t vectors.")
 
-    res <- optim(c( # initial guesses
+    res <- nlminb(c( # initial guesses
                    q[1], # qi = q(t = first t in vector)
-                   (q[2] - q[1]) / (t[2] - t[1])), # Di = decline from first to
-                                                   # second point
+                   (log(q[2]) - log(q[1])) / (t[2] - t[1])),
+                         # Di = decline from first to second point
 
                     # cost function
-                 function (qguess, Dguess)
-                     sse(q, exponential.q(qguess, Dguess, t)),
-
-                 #"L-BFGS-B", # use L-BFGS-B so that we can apply bounds
+                 function (guess) sse(q, exponential.q(guess[1], guess[2], t)),
 
                  lower=c( # lower bounds
                    0, # qi > 0
@@ -47,5 +44,6 @@ best.exponential <- function(q, t)
                    10) # = 0.99995 / [time] effective
     )
 
-    res
+    list(decline=arps.decline(qi=res$par[1], Di=res$par[2]),
+         sse=res$objective)
 }
