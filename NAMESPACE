@@ -15,7 +15,6 @@ export(
     as.effective,
     rescale.by.time,
     arps.decline,
-    S3method,
     arps.q,
     arps.Np,
     arps.D
