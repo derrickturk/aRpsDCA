@@ -17,7 +17,8 @@ export(
     arps.decline,
     arps.q,
     arps.Np,
-    arps.D
+    arps.D,
+    best.exponential
 )
 
 S3method(arps.q, exponential)
