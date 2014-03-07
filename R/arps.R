@@ -172,3 +172,49 @@ rescale.by.time <- function (value,
     } else
         stop(stop.from)
 }
+
+arps.decline <- function(qi, Di, b=NA, Df=NA)
+{
+    if (is.na(b) && !is.na(Df))
+        stop("Must specify b for hyp2exp decline.")
+
+    if (is.na(b)) {
+        res <- list(qi=qi, Di=di)
+        class(res) <- c("exponential", "arps")
+    } else if (is.na(Df)) {
+        res <- list(qi=qi, Di=Di, b=b)
+        class(res) <- c("hyperbolic", "arps")
+    } else {
+        res <- list(qi=qi, Di=Di, b=b, Df=Df)
+        class(res) <- c("hyp2exp", "arps")
+    }
+
+    res
+}
+
+arps.q <- function(decl)
+{
+    UseMethod("arps.q", decl)
+}
+
+arps.Np <- function(decl)
+{
+    UseMethod("arps.Np", decl)
+}
+
+arps.D <- function(decl)
+{
+    UseMethod("arps.D", decl)
+}
+
+arps.q.exponential <- function(decl) do.call(exponential.q, decl)
+arps.q.hyperbolic <- function(decl) do.call(hyperbolic.q, decl)
+arps.q.hyp2exp <- function(decl) do.call(hyp2exp.q, decl)
+
+arps.Np.exponential <- function(decl) do.call(exponential.Np, decl)
+arps.Np.hyperbolic <- function(decl) do.call(hyperbolic.Np, decl)
+arps.Np.hyp2exp <- function(decl) do.call(hyp2exp.Np, decl)
+
+arps.D.exponential <- function(decl) do.call(exponential.D, decl)
+arps.D.hyperbolic <- function(decl) do.call(hyperbolic.D, decl)
+arps.D.hyp2exp <- function(decl) do.call(hyp2exp.D, decl)

@@ -13,5 +13,20 @@ export(
     hyp2exp.D,
     as.nominal,
     as.effective,
-    rescale.by.time
+    rescale.by.time,
+    arps.decline,
+    S3method,
+    arps.q,
+    arps.Np,
+    arps.D
 )
+
+S3method(arps.q, exponential)
+S3method(arps.Np, exponential)
+S3method(arps.D, exponential)
+S3method(arps.q, hyperbolic)
+S3method(arps.Np, hyperbolic)
+S3method(arps.D, hyperbolic)
+S3method(arps.q, hyp2exp)
+S3method(arps.Np, hyp2exp)
+S3method(arps.D, hyp2exp)
