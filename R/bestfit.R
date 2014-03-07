@@ -47,3 +47,33 @@ best.exponential <- function(q, t)
     list(decline=arps.decline(qi=res$par[1], Di=res$par[2]),
          sse=res$objective)
 }
+
+best.hyperbolic <- function(q, t)
+{
+    if (length(q) != length(t) || length(q) <= 1)
+        stop("Invalid lengths for q, t vectors.")
+
+    res <- nlminb(c( # initial guesses
+                   q[1], # qi = q(t = first t in vector)
+                   (log(q[2]) - log(q[1])) / (t[2] - t[1]),
+                         # Di = decline from first to second point
+                   1.5),   # right-ish for a lot of wells currently coming on
+
+                    # cost function
+                 function (guess)
+                     sse(q, hyperbolic.q(guess[1], guess[2], guess[3], t)),
+
+                 lower=c( # lower bounds
+                   0,  # qi > 0
+                   0,  # qi < qmax * 3
+                   0), # b > 0
+
+                 upper=c( # upper bounds
+                   max(q) * 3, # qi < qmax * 3
+                   10, # = 0.99995 / [time] effective
+                   5)  # don't get crazy
+    )
+
+    list(decline=arps.decline(qi=res$par[1], Di=res$par[2], b=res$par[3]),
+         sse=res$objective)
+}
