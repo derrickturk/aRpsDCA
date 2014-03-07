@@ -1,1 +1,3 @@
 .gitignore
+Makefile
+.tar.gz
