@@ -24,6 +24,7 @@
   \item{b}{Arps hyperbolic exponent.}
   \item{Df}{nominal Arps decline exponent [1 / time].}
   \item{t}{time at which to evaluate rate, cumulative, or nominal decline [time].}
+  \item{decl}{An Arps decline object as returned by \code{arps.decline}.}
 }
 
 \value{
@@ -34,11 +35,11 @@
     decline \code{decl}, in the same units as the value of \code{qi} for
     \code{decl}.
 
-    \code{q.arps} returns the cumulative production for each element of \code{t}
+    \code{Np.arps} returns the cumulative production for each element of \code{t}
     applying decline \code{decl}, in the same units as the value of
     \code{qi * t} for \code{decl}.
 
-    \code{q.arps} returns the nominal decline for each element of \code{t}
+    \code{D.arps} returns the nominal decline for each element of \code{t}
     applying decline \code{decl}, in the same units as the value of \code{Di}
     for \code{decl}.
 }
