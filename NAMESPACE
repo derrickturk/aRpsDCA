@@ -18,7 +18,14 @@ export(
     arps.q,
     arps.Np,
     arps.D,
-    best.exponential
+    best.exponential,
+    best.hyperbolic,
+    best.hyp2exp,
+    best.fit,
+    best.exponential.from.Np,
+    best.hyperbolic.from.Np,
+    best.hyp2exp.from.Np,
+    best.fit.from.Np
 )
 
 S3method(arps.q, exponential)

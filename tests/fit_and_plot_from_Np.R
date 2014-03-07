@@ -18,40 +18,40 @@
 # USA
 
 fitme.exponential.t <- seq(0, 5, 1 / 12) # 5 years
-fitme.exponential.q <- exponential.q(
+fitme.exponential.Np <- exponential.Np(
     1000, # Bbl/d
     as.nominal(0.70), # / year
     fitme.exponential.t
 ) * rnorm(n=length(fitme.exponential.t), mean=1, sd=0.1) # perturb
 
-exponential.fit <- best.exponential(fitme.exponential.q, fitme.exponential.t)
+exponential.fit <- best.exponential.from.Np(fitme.exponential.Np, fitme.exponential.t)
 cat(paste("SSE:", exponential.fit$sse))
 dev.new()
-plot(fitme.exponential.q ~ fitme.exponential.t, main="Exponential Fit",
-     col="blue", log="y", xlab="Time", ylab="Rate")
-lines(arps.q(exponential.fit$decline, fitme.exponential.t) ~ fitme.exponential.t,
+plot(fitme.exponential.Np ~ fitme.exponential.t, main="Exponential Fit",
+     col="blue", xlab="Time", ylab="Cumulative Production")
+lines(arps.Np(exponential.fit$decline, fitme.exponential.t) ~ fitme.exponential.t,
       col="red")
 legend("topright", pch=c(1, NA), lty=c(NA, 1), col=c("blue", "red"), legend=c("Actual", "Fit"))
 
 fitme.hyperbolic.t <- seq(0, 5, 1 / 12) # 5 years
-fitme.hyperbolic.q <- hyperbolic.q(
+fitme.hyperbolic.Np <- hyperbolic.Np(
     1000, # Bbl/d
     as.nominal(0.70), # / year
     1.9,
     fitme.hyperbolic.t
 ) * rnorm(n=length(fitme.hyperbolic.t), mean=1, sd=0.1) # perturb
 
-hyperbolic.fit <- best.hyperbolic(fitme.hyperbolic.q, fitme.hyperbolic.t)
+hyperbolic.fit <- best.hyperbolic.from.Np(fitme.hyperbolic.Np, fitme.hyperbolic.t)
 cat(paste("SSE:", hyperbolic.fit$sse))
 dev.new()
-plot(fitme.hyperbolic.q ~ fitme.hyperbolic.t, main="Hyperbolic Fit",
-     col="blue", log="y", xlab="Time", ylab="Rate")
-lines(arps.q(hyperbolic.fit$decline, fitme.hyperbolic.t) ~ fitme.hyperbolic.t,
+plot(fitme.hyperbolic.Np ~ fitme.hyperbolic.t, main="Hyperbolic Fit",
+     col="blue", xlab="Time", ylab="Cumulative Production")
+lines(arps.Np(hyperbolic.fit$decline, fitme.hyperbolic.t) ~ fitme.hyperbolic.t,
       col="red")
 legend("topright", pch=c(1, NA), lty=c(NA, 1), col=c("blue", "red"), legend=c("Actual", "Fit"))
 
 fitme.hyp2exp.t <- seq(0, 5, 1 / 12) # 5 years
-fitme.hyp2exp.q <- hyp2exp.q(
+fitme.hyp2exp.Np <- hyp2exp.Np(
     1000, # Bbl/d
     as.nominal(0.70), # / year
     1.9,
@@ -59,21 +59,22 @@ fitme.hyp2exp.q <- hyp2exp.q(
     fitme.hyp2exp.t
 ) * rnorm(n=length(fitme.hyp2exp.t), mean=1, sd=0.1) # perturb
 
-hyp2exp.fit <- best.hyp2exp(fitme.hyp2exp.q, fitme.hyp2exp.t)
+hyp2exp.fit <- best.hyp2exp.from.Np(fitme.hyp2exp.Np, fitme.hyp2exp.t)
 cat(paste("SSE:", hyp2exp.fit$sse))
 dev.new()
-plot(fitme.hyp2exp.q ~ fitme.hyp2exp.t, main="Hyperbolic-to-Exponential Fit",
-     col="blue", log="y", xlab="Time", ylab="Rate")
-lines(arps.q(hyp2exp.fit$decline, fitme.hyp2exp.t) ~ fitme.hyp2exp.t,
+plot(fitme.hyp2exp.Np ~ fitme.hyp2exp.t, main="Hyperbolic-to-Exponential Fit",
+     col="blue", xlab="Time", ylab="Cumulative Production")
+lines(arps.Np(hyp2exp.fit$decline, fitme.hyp2exp.t) ~ fitme.hyp2exp.t,
       col="red")
 legend("topright", pch=c(1, NA), lty=c(NA, 1), col=c("blue", "red"), legend=c("Actual", "Fit"))
 
-overall.best <- best.fit(fitme.hyp2exp.q, fitme.hyp2exp.t)
+overall.best <- best.fit.from.Np(fitme.hyp2exp.Np, fitme.hyp2exp.t)
 cat(paste("SSE:", overall.best$sse))
 dev.new()
-plot(fitme.hyp2exp.q ~ fitme.hyp2exp.t, main="Overall Best Fit (h2e Data)",
-     col="blue", log="y", xlab="Time", ylab="Rate")
-lines(arps.q(overall.best$decline, fitme.hyp2exp.t) ~ fitme.hyp2exp.t,
+plot(fitme.hyp2exp.Np ~ fitme.hyp2exp.t, main="Overall Best Fit (h2e Data)",
+     col="blue", xlab="Time", ylab="Rate")
+lines(arps.Np(overall.best$decline, fitme.hyp2exp.t) ~ fitme.hyp2exp.t,
       col="red")
 legend("topright", pch=c(1, NA), lty=c(NA, 1), col=c("blue", "red"), legend=c("Actual", "Fit"))
+
 

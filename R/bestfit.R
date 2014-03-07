@@ -91,11 +91,9 @@ best.hyp2exp <- function(q, t)
                    0.1), # Df = about 9% effective
 
                     # cost function
-                 function (guess) {
-                     print(guess)
+                 function (guess)
                      sse(q,
-                         hyp2exp.q(guess[1], guess[2], guess[3], guess[4], t))
-                 },
+                         hyp2exp.q(guess[1], guess[2], guess[3], guess[4], t)),
 
                  lower=c( # lower bounds
                    0,  # qi > 0
@@ -115,4 +113,125 @@ best.hyp2exp <- function(q, t)
                               b=res$par[3],
                               Df=res$par[4]),
          sse=res$objective)
+}
+
+best.fit <- function(q, t)
+{
+    exp <- best.exponential(q, t)
+    hyp <- best.hyperbolic(q, t)
+    h2e <- best.hyp2exp(q, t)
+
+    if (exp$sse <= hyp$sse && exp$sse <= h2e$sse)
+        exp
+    else if (hyp$sse <= exp$sse && hyp$sse <= h2e$sse)
+        hyp
+    else
+        h2e
+}
+
+best.exponential.from.Np <- function(Np, t)
+{
+    if (length(Np) != length(t) || length(Np) <= 1)
+        stop("Invalid lengths for Np, t vectors.")
+
+    res <- nlminb(c( # initial guesses
+                   Np[1], # qi = Np(t = first t in vector)
+                   (log(Np[2] - Np[1]) - log(Np[1])) / (t[2] - t[1])),
+                         # Di = decline from first to second point
+
+                    # cost function
+                 function (guess) sse(Np, exponential.Np(guess[1], guess[2], t)),
+
+                 lower=c( # lower bounds
+                   0, # qi > 0
+                   0), # D > 0
+
+                 upper=c( # upper bounds
+                   max(Np) * 3, # qi < max(Np) * 3
+                   10) # = 0.99995 / [time] effective
+    )
+
+    list(decline=arps.decline(qi=res$par[1], Di=res$par[2]),
+         sse=res$objective)
+}
+
+best.hyperbolic.from.Np <- function(Np, t)
+{
+    if (length(Np) != length(t) || length(Np) <= 1)
+        stop("Invalid lengths for Np, t vectors.")
+
+    res <- nlminb(c( # initial guesses
+                   Np[1], # qi = q(t = first t in vector)
+                   (log(Np[2] - Np[1]) - log(Np[1])) / (t[2] - t[1]),
+                         # Di = decline from first to second point
+                   1.5),   # right-ish for a lot of wells currently coming on
+
+                    # cost function
+                 function (guess)
+                     sse(Np, hyperbolic.Np(guess[1], guess[2], guess[3], t)),
+
+                 lower=c( # lower bounds
+                   0,  # qi > 0
+                   0,  # Di > 0
+                   0), # b > 0
+
+                 upper=c( # upper bounds
+                   max(Np) * 3, # qi < max(Np) * 3
+                   10, # = 0.99995 / [time] effective
+                   5)  # don't get crazy
+    )
+
+    list(decline=arps.decline(qi=res$par[1], Di=res$par[2], b=res$par[3]),
+         sse=res$objective)
+}
+
+best.hyp2exp.from.Np <- function(Np, t)
+{
+    if (length(Np) != length(t) || length(Np) <= 1)
+        stop("Invalid lengths for Np, t vectors.")
+
+    res <- nlminb(c( # initial guesses
+                   Np[1], # qi = Np(t = first t in vector)
+                   (log(Np[2] - Np[1]) - log(Np[1])) / (t[2] - t[1]),
+                         # Di = decline from first to second point
+                   1.5,  # b = right-ish for a lot of wells currently coming on
+                   0.1), # Df = about 9% effective
+
+                    # cost function
+                 function (guess)
+                     sse(Np,
+                         hyp2exp.Np(guess[1], guess[2], guess[3], guess[4], t)),
+
+                 lower=c( # lower bounds
+                   0,  # qi > 0
+                   0.35,  # Di > 0
+                   0,  # b > 0
+                   0), # Df > 0
+
+                 upper=c( # upper bounds
+                   max(Np) * 3, # qi < max(Np) * 3
+                   10, # = 0.99995 / [time] effective
+                   5,  # don't get crazy
+                   0.35) # likewise
+    )
+
+    list(decline=arps.decline(qi=res$par[1],
+                              Di=res$par[2],
+                              b=res$par[3],
+                              Df=res$par[4]),
+         sse=res$objective)
+}
+
+best.fit.from.Np <- function(Np, t)
+{
+    exp <- best.exponential.from.Np(Np, t)
+    hyp <- best.hyperbolic.from.Np(Np, t)
+    h2e <- best.hyp2exp.from.Np(Np, t)
+
+    if (exp$sse <= hyp$sse && exp$sse <= h2e$sse)
+        exp
+    else if (hyp$sse <= exp$sse && hyp$sse <= h2e$sse)
+        hyp
+    else
+        h2e
 }
