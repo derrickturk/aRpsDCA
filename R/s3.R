@@ -51,14 +51,14 @@ arps.D <- function(decl, t)
     UseMethod("arps.D")
 }
 
-arps.q.exponential <- function(decl, t) do.call(exponential.q, c(decl, list(t=t)))
-arps.q.hyperbolic <- function(decl, t) do.call(hyperbolic.q, c(decl, list(t=t)))
-arps.q.hyp2exp <- function(decl, t) do.call(hyp2exp.q, c(decl, list(t=t)))
+arps.q.exponential <- function(decl, t) exponential.q(decl$qi, decl$D, t)
+arps.q.hyperbolic <- function(decl, t) hyperbolic.q(decl$qi, decl$Di, decl$b, t)
+arps.q.hyp2exp <- function(decl, t) hyp2exp.q(decl$qi, decl$Di, decl$b, decl$Df, t)
 
-arps.Np.exponential <- function(decl, t) do.call(exponential.Np, c(decl, list(t=t)))
-arps.Np.hyperbolic <- function(decl, t) do.call(hyperbolic.Np, c(decl, list(t=t)))
-arps.Np.hyp2exp <- function(decl, t) do.call(hyp2exp.Np, c(decl, list(t=t)))
+arps.Np.exponential <- function(decl, t) exponential.Np(decl$qi, decl$D, t)
+arps.Np.hyperbolic <- function(decl, t) hyperbolic.Np(decl$qi, decl$Di, decl$b, t)
+arps.Np.hyp2exp <- function(decl, t) hyp2exp.Np(decl$qi, decl$Di, decl$b, decl$Df, t)
 
 arps.D.exponential <- function(decl, t) decl$D
-arps.D.hyperbolic <- function(decl, t) do.call(hyperbolic.D, c(decl, list(t=t)))
-arps.D.hyp2exp <- function(decl, t) do.call(hyp2exp.D, c(decl, list(t=t)))
+arps.D.hyperbolic <- function(decl, t) hyperbolic.D(decl$Di, decl$b, t)
+arps.D.hyp2exp <- function(decl, t) hyp2exp.D(decl$Di, decl$b, decl$Df, t)
