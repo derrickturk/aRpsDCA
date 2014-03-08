@@ -7,4 +7,7 @@ aRpsDCA_$(VER).tar.gz:
 	R CMD BUILD .
 
 clean:
-	R CMD REMOVE aRpsDCA
+	-R CMD REMOVE aRpsDCA
+
+check: aRpsDCA_$(VER).tar.gz
+	R CMD CHECK aRpsDCA_$(VER).tar.gz

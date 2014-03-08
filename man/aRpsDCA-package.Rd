@@ -18,6 +18,7 @@ Index:
 \code{\link{arps}}             \tab   Generic functions for Arps decline curves \cr
 \code{\link{as.effective}}     \tab   Arps decline conversion from nominal to effective \cr
 \code{\link{as.nominal}}       \tab   Arps decline conversion from effective to nominal \cr
+\code{\link{bestfit}}          \tab   Best-fitting for Arps decline curves \cr
 \code{\link{exponential}}      \tab   Arps exponential declines \cr
 \code{\link{harmonic}}         \tab   Arps harmonic declines \cr
 \code{\link{hyp2exp}}          \tab   Arps hyperbolic-to-exponential declines \cr
