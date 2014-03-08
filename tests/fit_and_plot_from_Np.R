@@ -17,6 +17,8 @@
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301
 # USA
 
+library(aRpsDCA)
+
 fitme.exponential.t <- seq(0, 5, 1 / 12) # 5 years
 fitme.exponential.Np <- exponential.Np(
     1000, # Bbl/d
