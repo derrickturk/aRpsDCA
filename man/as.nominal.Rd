@@ -8,9 +8,9 @@
 }
 
 \usage{
-    as.nominal(D.eff,
-        from.period=c("year", "month", "day"),
-        to.period=c("year", "month", "day"))
+as.nominal(D.eff,
+    from.period=c("year", "month", "day"),
+    to.period=c("year", "month", "day"))
 }
 
 \arguments{
@@ -34,6 +34,6 @@
 }
 
 \examples{
-    ## 95% / year effective decline to nominal daily decline
-    as.nominal(0.95, from.period="year", to.period="day")
+## 95% / year effective decline to nominal daily decline
+as.nominal(0.95, from.period="year", to.period="day")
 }

@@ -24,10 +24,10 @@
 }
 
 \usage{
-    arps.decline(qi, Di, b=NA, Df=NA)
-    \method{arps.q}{arps}(decl, t)
-    \method{arps.Np}{arps}(decl, t)
-    \method{arps.D}{arps}(decl, t)
+arps.decline(qi, Di, b=NA, Df=NA)
+\method{arps.q}{arps}(decl, t)
+\method{arps.Np}{arps}(decl, t)
+\method{arps.D}{arps}(decl, t)
 }
 
 \arguments{
@@ -76,17 +76,17 @@
 }
 
 \examples{
-    ## exponential decline with
-    ## qi = 1000 Mscf/d, Di = 95% effective / year
-    ## rate for t from 0 to 25 days
-    decline <- arps.decline(1000,
-        as.nominal(0.95, from.period="year", to.period="day"))
-    arps.q(decline, seq(0, 25))
+## exponential decline with
+## qi = 1000 Mscf/d, Di = 95% effective / year
+## rate for t from 0 to 25 days
+decline <- arps.decline(1000,
+    as.nominal(0.95, from.period="year", to.period="day"))
+arps.q(decline, seq(0, 25))
 
-    ## hyperbolic decline with
-    ## qi = 500 bopd, Di = 3.91 nominal / year, b = 1.5,
-    ## cumulative production at t = 5 years
-    decline <- arps.decline(rescale.by.time(500, from="day", to="year"),
-        3.91, 1.5)
-    arps.Np(decline, 5)
+## hyperbolic decline with
+## qi = 500 bopd, Di = 3.91 nominal / year, b = 1.5,
+## cumulative production at t = 5 years
+decline <- arps.decline(rescale.by.time(500, from="day", to="year"),
+    3.91, 1.5)
+arps.Np(decline, 5)
 }

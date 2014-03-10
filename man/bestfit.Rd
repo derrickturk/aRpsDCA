@@ -16,14 +16,14 @@
 }
 
 \usage{
-    best.exponential(q, t)
-    best.hyperbolic(q, t)
-    best.hyp2exp(q, t)
-    best.fit(q, t)
-    best.exponential.from.Np(Np, t)
-    best.hyperbolic.from.Np(Np, t)
-    best.hyp2exp.from.Np(Np, t)
-    best.fit.from.Np(Np, t)
+best.exponential(q, t)
+best.hyperbolic(q, t)
+best.hyp2exp(q, t)
+best.fit(q, t)
+best.exponential.from.Np(Np, t)
+best.hyperbolic.from.Np(Np, t)
+best.hyp2exp.from.Np(Np, t)
+best.fit.from.Np(Np, t)
 }
 
 \arguments{
@@ -62,21 +62,21 @@
 }
 
 \examples{
-    fitme.hyp2exp.t <- seq(0, 5, 1 / 12) # 5 years
-    fitme.hyp2exp.q <- hyp2exp.q(
-        1000, # Bbl/d
-        as.nominal(0.70), # / year
-        1.9,
-        as.nominal(0.15), # / year
-        fitme.hyp2exp.t
-    ) * rnorm(n=length(fitme.hyp2exp.t), mean=1, sd=0.1) # perturb
+fitme.hyp2exp.t <- seq(0, 5, 1 / 12) # 5 years
+fitme.hyp2exp.q <- hyp2exp.q(
+    1000, # Bbl/d
+    as.nominal(0.70), # / year
+    1.9,
+    as.nominal(0.15), # / year
+    fitme.hyp2exp.t
+) * rnorm(n=length(fitme.hyp2exp.t), mean=1, sd=0.1) # perturb
 
-    hyp2exp.fit <- best.hyp2exp(fitme.hyp2exp.q, fitme.hyp2exp.t)
-    cat(paste("SSE:", hyp2exp.fit$sse))
-    dev.new()
-    plot(fitme.hyp2exp.q ~ fitme.hyp2exp.t, main="Hyperbolic-to-Exponential Fit",
-         col="blue", log="y", xlab="Time", ylab="Rate")
-    lines(arps.q(hyp2exp.fit$decline, fitme.hyp2exp.t) ~ fitme.hyp2exp.t,
-          col="red")
-    legend("topright", pch=c(1, NA), lty=c(NA, 1), col=c("blue", "red"), legend=c("Actual", "Fit"))
+hyp2exp.fit <- best.hyp2exp(fitme.hyp2exp.q, fitme.hyp2exp.t)
+cat(paste("SSE:", hyp2exp.fit$sse))
+dev.new()
+plot(fitme.hyp2exp.q ~ fitme.hyp2exp.t, main="Hyperbolic-to-Exponential Fit",
+     col="blue", log="y", xlab="Time", ylab="Rate")
+lines(arps.q(hyp2exp.fit$decline, fitme.hyp2exp.t) ~ fitme.hyp2exp.t,
+      col="red")
+legend("topright", pch=c(1, NA), lty=c(NA, 1), col=c("blue", "red"), legend=c("Actual", "Fit"))
 }

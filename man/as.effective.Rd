@@ -8,9 +8,9 @@
 }
 
 \usage{
-    as.effective(D.nom,
-        from.period=c("year", "month", "day"),
-        to.period=c("year", "month", "day"))
+as.effective(D.nom,
+    from.period=c("year", "month", "day"),
+    to.period=c("year", "month", "day"))
 }
 
 \arguments{
@@ -34,6 +34,6 @@
 }
 
 \examples{
-    ## 0.008 nominal daily decline to tangent effective yearly decline
-    as.effective(0.008, from.period="day", to.period="year")
+## 0.008 nominal daily decline to tangent effective yearly decline
+as.effective(0.008, from.period="day", to.period="year")
 }
