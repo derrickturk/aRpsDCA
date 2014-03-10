@@ -62,3 +62,37 @@ arps.Np.hyp2exp <- function(decl, t) hyp2exp.Np(decl$qi, decl$Di, decl$b, decl$D
 arps.D.exponential <- function(decl, t) decl$D
 arps.D.hyperbolic <- function(decl, t) hyperbolic.D(decl$Di, decl$b, t)
 arps.D.hyp2exp <- function(decl, t) hyp2exp.D(decl$Di, decl$b, decl$Df, t)
+
+print.arps <- function(x, ...)
+{
+    cat("Arps decline: ")
+    print(unclass(x))
+    invisible(x)
+}
+
+print.exponential <- function(x, ...)
+{
+    cat("Arps exponential decline: <qi = ", x$qi,
+        ", D = ", x$D, ">\n",
+        sep="")
+    invisible(x)
+}
+
+print.hyperbolic <- function(x, ...)
+{
+    cat("Arps hyperbolic decline: <qi = ", x$qi,
+        ", Di = ", x$Di,
+        ", b = ", x$b, ">\n",
+        sep="")
+    invisible(x)
+}
+
+print.hyp2exp <- function(x, ...)
+{
+    cat("Arps hyperbolic-to-exponential decline: <qi = ", x$qi,
+        ", Di = ", x$Di,
+        ", b = ", x$b,
+        ", Df = ", x$Df, ">\n",
+        sep="")
+    invisible(x)
+}
