@@ -58,8 +58,9 @@
 }
 
 \seealso{
-  \code{\link{exponential}}, \code{\link{hyperbolic}}, \code{\link{hyp2exp}},
-  \code{\link{as.effective}}, \code{\link{as.nominal}}, \code{\link{rescale.by.time}}.
+  \code{\link{print.arps}}, \code{\link{exponential}}, \code{\link{hyperbolic}},
+  \code{\link{hyp2exp}}, \code{\link{as.effective}}, \code{\link{as.nominal}},
+  \code{\link{rescale.by.time}}.
 }
 
 \examples{

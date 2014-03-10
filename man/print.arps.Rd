@@ -1,5 +1,4 @@
 \name{print.arps}
-\alias{print}
 \alias{print.arps}
 
 \title{Print methods for Arps decline objects}
@@ -9,12 +8,12 @@
 }
 
 \usage{
-    print(x, ...)
+    \method{print}{arps}(x, \dots)
 }
 
 \arguments{
   \item{x}{Arps decline curve object as returned from \code{\link{arps.decline}}.}
-  \item{...}{Arguments to additional methods.}
+  \item{\dots}{Arguments to additional methods.}
 }
 
 \value{
@@ -22,7 +21,7 @@
 }
 
 \seealso{
-  \code{\link{base::print}}, \code{\link{arps.decline}}.
+  \code{\link{print}}, \code{\link{arps.decline}}.
 }
 
 \examples{
