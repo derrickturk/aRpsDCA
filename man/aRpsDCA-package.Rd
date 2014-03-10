@@ -23,6 +23,7 @@ Index:
 \code{\link{harmonic}}         \tab   Arps harmonic declines \cr
 \code{\link{hyp2exp}}          \tab   Arps hyperbolic-to-exponential declines \cr
 \code{\link{hyperbolic}}       \tab   Arps hyperbolic declines \cr
+\code{\link{print.arps}}       \tab   Print representations of Arps decline curves \cr
 \code{\link{rescale.by.time}}  \tab   Time unit conversion for DCA \cr
 }
 }

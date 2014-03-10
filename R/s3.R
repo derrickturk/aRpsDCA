@@ -51,6 +51,10 @@ arps.D <- function(decl, t)
     UseMethod("arps.D")
 }
 
+arps.q.arps <- function(decl, t) stop("Need specific decline class.")
+arps.Np.arps <- function(decl, t) stop("Need specific decline class.")
+arps.D.arps <- function(decl, t) stop("Need specific decline class.")
+
 arps.q.exponential <- function(decl, t) exponential.q(decl$qi, decl$D, t)
 arps.q.hyperbolic <- function(decl, t) hyperbolic.q(decl$qi, decl$Di, decl$b, t)
 arps.q.hyp2exp <- function(decl, t) hyp2exp.q(decl$qi, decl$Di, decl$b, decl$Df, t)

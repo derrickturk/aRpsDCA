@@ -4,6 +4,18 @@
 \alias{arps.q}
 \alias{arps.Np}
 \alias{arps.D}
+\alias{arps.q.arps}
+\alias{arps.Np.arps}
+\alias{arps.D.arps}
+\alias{arps.q.exponential}
+\alias{arps.Np.exponential}
+\alias{arps.D.exponential}
+\alias{arps.q.hyperbolic}
+\alias{arps.Np.hyperbolic}
+\alias{arps.D.hyperbolic}
+\alias{arps.q.hyp2exp}
+\alias{arps.Np.hyp2exp}
+\alias{arps.D.hyp2exp}
 
 \title{Arps decline classes and S3 methods}
 
@@ -13,9 +25,9 @@
 
 \usage{
     arps.decline(qi, Di, b=NA, Df=NA)
-    arps.q(decl, t)
-    arps.Np(decl, t)
-    arps.D(decl, t)
+    \method{arps.q}{arps}(decl, t)
+    \method{arps.Np}{arps}(decl, t)
+    \method{arps.D}{arps}(decl, t)
 }
 
 \arguments{
