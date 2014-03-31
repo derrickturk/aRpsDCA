@@ -69,7 +69,7 @@ arps.D.hyp2exp <- function(decl, t) hyp2exp.D(decl$Di, decl$b, decl$Df, t)
 
 print.arps <- function(x, ...)
 {
-    cat("Arps decline: ")
+    cat("Arps decline: \n")
     print(unclass(x))
     invisible(x)
 }
