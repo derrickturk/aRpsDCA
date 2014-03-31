@@ -11,6 +11,9 @@ export(
     hyp2exp.q,
     hyp2exp.Np,
     hyp2exp.D,
+    curtailed.q,
+    curtailed.Np,
+    curtailed.D,
     as.nominal,
     as.effective,
     rescale.by.time,
@@ -37,7 +40,11 @@ S3method(arps.D, hyperbolic)
 S3method(arps.q, hyp2exp)
 S3method(arps.Np, hyp2exp)
 S3method(arps.D, hyp2exp)
+S3method(arps.q, curtailed)
+S3method(arps.Np, curtailed)
+S3method(arps.D, curtailed)
 S3method(print, arps)
 S3method(print, exponential)
 S3method(print, hyperbolic)
 S3method(print, hyp2exp)
+S3method(print, curtailed)
