@@ -13,3 +13,10 @@
 \description{
     Create decline curve objects and compute rates, cumulative production, and nominal declines for Arps decline curves with an initial period of curtailment to constant rate.
 }
+
+\usage{
+    curtailed.q(t.curtail, decline, t)
+    curtailed.Np(t.curtail, decline, t)
+    curtailed.D(t.curtail, decline, t)
+    curtail(decline, t.curtail)
+}
