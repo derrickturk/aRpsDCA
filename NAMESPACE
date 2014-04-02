@@ -17,6 +17,7 @@ export(
     as.nominal,
     as.effective,
     rescale.by.time,
+    curtail,
     arps.decline,
     arps.q,
     arps.Np,
