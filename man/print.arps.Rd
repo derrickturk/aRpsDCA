@@ -4,7 +4,7 @@
 \title{Print methods for Arps decline objects}
 
 \description{
-    Print human-readable representation of Arps decline-curve objects.
+    Print human-readable representation of Arps decline-curve objects using \code{\link{format.arps}}.
 }
 
 \usage{
@@ -13,7 +13,7 @@
 
 \arguments{
   \item{x}{Arps decline curve object as returned from \code{\link{arps.decline}}.}
-  \item{\dots}{Arguments to additional methods.}
+  \item{\dots}{Arguments to \code{\link{format.arps}}.}
 }
 
 \value{
@@ -21,7 +21,7 @@
 }
 
 \seealso{
-  \code{\link{print}}, \code{\link{arps.decline}}.
+  \code{\link{print}}, \code{\link{format.arps}}, \code{\link{arps.decline}}.
 }
 
 \examples{

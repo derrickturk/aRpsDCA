@@ -67,36 +67,49 @@ arps.D.exponential <- function(decl, t) decl$D
 arps.D.hyperbolic <- function(decl, t) hyperbolic.D(decl$Di, decl$b, t)
 arps.D.hyp2exp <- function(decl, t) hyp2exp.D(decl$Di, decl$b, decl$Df, t)
 
+format.arps <- function(x, ...)
+{
+    paste("Arps decline:", format(unclass(x), ...), sep="\n")
+}
+
+format.exponential <- function(x, ...)
+{
+    paste("Arps exponential decline: <qi = ",
+          format(x$qi, ...),
+          ", D = ",
+          format(x$D, ...),
+          ">",
+          sep="")
+}
+
+format.hyperbolic <- function(x, ...)
+{
+    paste("Arps exponential decline: <qi = ",
+          format(x$qi, ...),
+          ", Di = ",
+          format(x$Di, ...),
+          ", b = ",
+          format(x$b, ...),
+          ">",
+          sep="")
+}
+
+format.hyp2exp <- function(x, ...)
+{
+    paste("Arps exponential decline: <qi = ",
+          format(x$qi, ...),
+          ", Di = ",
+          format(x$Di, ...),
+          ", b = ",
+          format(x$b, ...),
+          ", Df = ",
+          format(x$Df, ...),
+          ">",
+          sep="")
+}
+
 print.arps <- function(x, ...)
 {
-    cat("Arps decline: \n")
-    print(unclass(x))
-    invisible(x)
-}
-
-print.exponential <- function(x, ...)
-{
-    cat("Arps exponential decline: <qi = ", x$qi,
-        ", D = ", x$D, ">\n",
-        sep="")
-    invisible(x)
-}
-
-print.hyperbolic <- function(x, ...)
-{
-    cat("Arps hyperbolic decline: <qi = ", x$qi,
-        ", Di = ", x$Di,
-        ", b = ", x$b, ">\n",
-        sep="")
-    invisible(x)
-}
-
-print.hyp2exp <- function(x, ...)
-{
-    cat("Arps hyperbolic-to-exponential decline: <qi = ", x$qi,
-        ", Di = ", x$Di,
-        ", b = ", x$b,
-        ", Df = ", x$Df, ">\n",
-        sep="")
+    print(format(x, ...))
     invisible(x)
 }

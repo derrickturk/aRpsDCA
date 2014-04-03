@@ -55,10 +55,11 @@ arps.Np.curtailed <- function(decl, t)
 arps.D.curtailed <- function(decl, t)
     curtailed.D(decl$arps, decl$t.curtail, t)
 
-print.curtailed <- function(x, ...)
+format.curtailed <- function(x, ...)
 {
-    cat("Curtailed ")
-    print(x$arps)
-    cat("with t_curtail = ", x$t.curtail, "\n", sep="")
-    invisible(x)
+    paste("Curtailed ",
+          format(x$arps, ...),
+          " with t.curtail = ",
+          format(x$t.curtail, ...),
+          sep="")
 }
