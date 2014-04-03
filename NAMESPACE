@@ -29,7 +29,15 @@ export(
     best.exponential.from.Np,
     best.hyperbolic.from.Np,
     best.hyp2exp.from.Np,
-    best.fit.from.Np
+    best.fit.from.Np,
+    best.exponential.curtailed,
+    best.hyperbolic.curtailed,
+    best.hyp2exp.curtailed,
+    best.curtailed.fit,
+    best.exponential.curtailed.from.Np,
+    best.hyperbolic.curtailed.from.Np,
+    best.hyp2exp.curtailed.from.Np,
+    best.curtailed.fit.from.Np
 )
 
 S3method(arps.q, exponential)

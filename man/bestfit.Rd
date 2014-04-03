@@ -8,6 +8,14 @@
 \alias{best.hyperbolic.from.Np}
 \alias{best.hyp2exp.from.Np}
 \alias{best.fit.from.Np}
+\alias{best.exponential.curtailed}
+\alias{best.hyperbolic.curtailed}
+\alias{best.hyp2exp.curtailed}
+\alias{best.curtailed.fit}
+\alias{best.exponential.curtailed.from.Np}
+\alias{best.hyperbolic.curtailed.from.Np}
+\alias{best.hyp2exp.curtailed.from.Np}
+\alias{best.curtailed.fit.from.Np}
 
 \title{Best-fitting of Arps decline curves}
 
@@ -24,6 +32,14 @@ best.exponential.from.Np(Np, t)
 best.hyperbolic.from.Np(Np, t)
 best.hyp2exp.from.Np(Np, t)
 best.fit.from.Np(Np, t)
+best.exponential.curtailed(q, t)
+best.hyperbolic.curtailed(q, t)
+best.hyp2exp.curtailed(q, t)
+best.curtailed.fit(q, t)
+best.exponential.curtailed.from.Np(Np, t)
+best.hyperbolic.curtailed.from.Np(Np, t)
+best.hyp2exp.curtailed.from.Np(Np, t)
+best.curtailed.fit.from.Np(Np, t)
 }
 
 \arguments{
@@ -48,6 +64,14 @@ best.fit.from.Np(Np, t)
 
     \code{best.fit.from.Np} returns the best overall fit, considering results
     from each function above.
+
+    \code{best.exponential.curtailed}, \code{best.hyperbolic.curtailed},
+    \code{best.hyp2exp.curtailed}, \code{best.curtailed.fit},
+    \code{best.exponential.curtailed.from.Np},
+    \code{best.hyperbolic.curtailed.from.Np},
+    \code{best.hyp2exp.curtailed.from.Np}, and \code{best.curtailed.fit.from.Np}
+    work as the corresponding functions above, but may return curtailed
+    declines (as from \code{\link{curtail}}).
 }
 
 \details{
@@ -58,7 +82,7 @@ best.fit.from.Np(Np, t)
 }
 
 \seealso{
-  \code{\link{arps}}, \code{\link{nlminb}}
+  \code{\link{arps}}, \code{\link{curtailed}}, \code{\link{nlminb}}
 }
 
 \examples{
