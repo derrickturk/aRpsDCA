@@ -16,6 +16,8 @@ Functions for Arps decline-curve analysis. Includes exponential, hyperbolic, har
 Index:
 \tabular{ll}{
 \code{\link{arps}}             \tab   Generic functions for Arps decline curves \cr
+\code{\link{eur}}              \tab   EUR and time to economic limit for Arps decline curves \cr
+\code{\link{curtail}}          \tab   Arps decline curves with initial rate curtailment \cr
 \code{\link{as.effective}}     \tab   Arps decline conversion from nominal to effective \cr
 \code{\link{as.nominal}}       \tab   Arps decline conversion from effective to nominal \cr
 \code{\link{bestfit}}          \tab   Best-fitting for Arps decline curves \cr
@@ -29,7 +31,7 @@ Index:
 }
 
 \author{
-Derrick Turk | \bold{terminus data science, LLC} <\email{dwt@terminusdatascience.com}>
+Derrick W. Turk | \bold{terminus data science, LLC} <\email{dwt@terminusdatascience.com}>
 }
 
 \references{
