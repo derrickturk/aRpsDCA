@@ -17,7 +17,7 @@
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301
 # USA
 
-t.el <- function(decl, q.limit)
+arps.t.el <- function(decl, q.limit)
 {
     nlminb(10,   # initial guess 10 periods
             function (t) ((arps.q(decl, t) - q.limit) ^ 2), # cost function
@@ -26,7 +26,7 @@ t.el <- function(decl, q.limit)
     )$par
 }
 
-eur <- function(decl, q.limit)
+arps.eur <- function(decl, q.limit)
 {
-    arps.Np(decl, t.el(decl, q.limit))
+    arps.Np(decl, arps.t.el(decl, q.limit))
 }

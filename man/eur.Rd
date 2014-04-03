@@ -1,6 +1,6 @@
-\name{eur}
-\alias{eur}
-\alias{t.el}
+\name{arps.eur}
+\alias{arps.eur}
+\alias{arps.t.el}
 
 \title{EUR and time-to-limit for Arps decline curves}
 
@@ -10,8 +10,8 @@
 }
 
 \usage{
-eur(decl, q.limit)
-t.el(decl, q.limit)
+arps.eur(decl, q.limit)
+arps.t.el(decl, q.limit)
 }
 
 \arguments{
@@ -20,12 +20,12 @@ t.el(decl, q.limit)
 }
 
 \value{
-    \code{eur} returns the total production for \code{decl} at the point in
+    \code{arps.eur} returns the total production for \code{decl} at the point in
     time when the economic limit \code{q.limit} is reached; that is,
-    \code{arps.Np(decl, t.el(decl, q.limit))}, in the same units as
+    \code{arps.Np(decl, arps.t.el(decl, q.limit))}, in the same units as
     \code{q.limit}.
 
-    \code{t.el} returns the time until the economic limit \code{q.limit} is
+    \code{arps.t.el} returns the time until the economic limit \code{q.limit} is
     reached for decline \code{decl}.
 }
 
@@ -39,13 +39,13 @@ t.el(decl, q.limit)
 ## EUR with economic limit 10 Mscf/d
 decline <- arps.decline(1000,
     as.nominal(0.95, from.period="year", to.period="day"))
-eur(decline, 10)
+arps.eur(decline, 10)
 
 ## hyperbolic decline with
 ## qi = 500 bopd, Di = 3.91 nominal / year, b = 1.5,
 ## time to reach economic limit of 3 bopd
 decline <- arps.decline(rescale.by.time(500, from="day", to="year"),
     3.91, 1.5)
-t.el(decline, rescale.by.time(3, from="day", to="year"))
+arps.t.el(decline, rescale.by.time(3, from="day", to="year"))
 }
 
