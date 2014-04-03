@@ -17,43 +17,43 @@
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301
 # USA
 
-curtailed.q <- function (t.curtail, decline, t)
+curtailed.q <- function (decl, t.curtail, t)
 {
-    q <- rep(decline$qi, length(t))
-    q[t > t.curtail] <- arps.q(decline, t[t > t.curtail] - t.curtail)
+    q <- rep(decl$qi, length(t))
+    q[t > t.curtail] <- arps.q(decl, t[t > t.curtail] - t.curtail)
     q
 }
 
-curtailed.Np <- function (t.curtail, decline, t)
+curtailed.Np <- function (decl, t.curtail, t)
 {
-    Np <- decline$qi * t
-    Np[t > t.curtail] <- decline$qi * t.curtail +
-      arps.Np(decline, t[t > t.curtail] - t.curtail)
+    Np <- decl$qi * t
+    Np[t > t.curtail] <- decl$qi * t.curtail +
+      arps.Np(decl, t[t > t.curtail] - t.curtail)
     Np
 }
 
-curtailed.D <- function (t.curtail, decline, t)
+curtailed.D <- function (decl, t.curtail, t)
 {
     D <- rep(0, length(t))
-    D[t > t.curtail] <- arps.D(decline, t[t > t.curtail] - t.curtail)
+    D[t > t.curtail] <- arps.D(decl, t[t > t.curtail] - t.curtail)
     D
 }
 
-curtail <- function (decline, t.curtail)
+curtail <- function (decl, t.curtail)
 {
-    res <- list(arps=decline, t.curtail=t.curtail)
+    res <- list(arps=decl, t.curtail=t.curtail)
     class(res) <- c("curtailed", "arps")
     res
 }
 
 arps.q.curtailed <- function(decl, t)
-    curtailed.q(decl$t.curtail, decl$arps, t)
+    curtailed.q(decl$arps, decl$t.curtail, t)
 
 arps.Np.curtailed <- function(decl, t)
-    curtailed.Np(decl$t.curtail, decl$arps, t)
+    curtailed.Np(decl$arps, decl$t.curtail, t)
 
 arps.D.curtailed <- function(decl, t)
-    curtailed.D(decl$t.curtail, decl$arps, t)
+    curtailed.D(decl$arps, decl$t.curtail, t)
 
 print.curtailed <- function(x, ...)
 {

@@ -36,7 +36,7 @@ arps.decline(qi, Di, b=NA, Df=NA)
   \item{b}{Arps hyperbolic exponent.}
   \item{Df}{nominal Arps decline exponent [1 / time].}
   \item{t}{time at which to evaluate rate, cumulative, or nominal decline [time].}
-  \item{decl}{An Arps decline object as returned by \code{arps.decline}.}
+  \item{decl}{an Arps decline object as returned by \code{arps.decline}.}
 }
 
 \value{
