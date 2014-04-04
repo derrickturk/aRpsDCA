@@ -17,4 +17,6 @@ aRpsDCA provides functions for
 
 aRpsDCA is released under the LGPL v2.1 and is free for commercial and non-commercial use.
 
+The current version of aRpsDCA is 1.0.0 and is available from [CRAN](http://cran.r-project.org/web/packages/aRpsDCA/index.html).
+
 (c) 2014 [dwt](http://www.github.com/derrickturk) | [terminus data science, LLC](http://www.terminusdatascience.com)
