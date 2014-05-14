@@ -27,7 +27,10 @@ exponential.q <- function (qi, D, t)
 
 exponential.Np <- function (qi, D, t)
 {
-    qi / D * (1 - exp(-D * t))
+    if (D == 0)
+        qi * t
+    else
+        qi / D * (1 - exp(-D * t))
 }
 
 harmonic.q <- function (qi, Di, t)
@@ -37,7 +40,10 @@ harmonic.q <- function (qi, Di, t)
 
 harmonic.Np <- function (qi, Di, t)
 {
-    qi / Di * log(1 + Di * t)
+    if (Di == 0)
+        qi * t
+    else
+        qi / Di * log(1 + Di * t)
 }
 
 harmonic.D <- function (Di, t)
@@ -61,6 +67,8 @@ hyperbolic.Np <- function (qi, Di, b, t)
         harmonic.Np(qi, Di, t)
     else if (abs(b) < EXPONENTIAL_EPS)
         exponential.Np(qi, Di, t)
+    else if (Di == 0)
+        qi * t
     else
         (qi / ((1 - b) * Di)) * (1 - (1 + b * Di * t) ^ (1 - (1/b)))
 }
@@ -72,7 +80,10 @@ hyperbolic.D <- function (Di, b, t)
 
 hyp2exp.transition <- function (Di, b, Df)
 {
-    (Di / Df - 1) / (b * Di)
+    if (Df == 0)
+        Inf
+    else
+        (Di / Df - 1) / (b * Di)
 }
 
 hyp2exp.q <- function (qi, Di, b, Df, t)
