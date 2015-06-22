@@ -19,8 +19,8 @@ aRpsDCA is released under the LGPL v2.1 and is free for commercial and non-comme
 
 The current version of aRpsDCA is 1.0.1 and is available from [CRAN](http://cran.r-project.org/web/packages/aRpsDCA/index.html).
 
-Release notes:
-v1.0.0 (2014-04-03): initial release
-v1.0.1 (2015-06-21): S3 methods for formatting now correctly print curve family; handling of Np for D = 0 is corrected
+Release notes:  
+v1.0.0 (2014-04-03): initial release  
+v1.0.1 (2015-06-21): S3 methods for formatting now correctly print curve family; handling of Np for D = 0 is corrected  
 
 (c) 2015 [dwt](http://www.github.com/derrickturk) | [terminus data science, LLC](http://www.terminusdatascience.com)
