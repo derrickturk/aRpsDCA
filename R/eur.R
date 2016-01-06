@@ -1,5 +1,5 @@
 # aRpsDCA
-# Copyright (C) 2015 dwt | terminus data science, LLC
+# Copyright (C) 2016 dwt | terminus data science, LLC
 # <dwt [at] terminusdatascience.com>
 
 # This library is free software; you can redistribute it and/or

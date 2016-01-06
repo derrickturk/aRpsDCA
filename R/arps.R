@@ -1,5 +1,5 @@
 # aRpsDCA
-# Copyright (C) 2015 dwt | terminus data science, LLC
+# Copyright (C) 2016 dwt | terminus data science, LLC
 # <dwt [at] terminusdatascience.com>
 
 # This library is free software; you can redistribute it and/or
@@ -80,8 +80,10 @@ hyperbolic.D <- function (Di, b, t)
 
 hyp2exp.transition <- function (Di, b, Df)
 {
-    if (Df == 0)
+    if (Di < EXPONENTIAL_EPS || Df < EXPONENTIAL_EPS || b < HARMONIC_EPS)
         Inf
+    else if (abs(Df - Di) < EXPONENTIAL_EPS)
+        0
     else
         (Di / Df - 1) / (b * Di)
 }

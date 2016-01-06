@@ -22,5 +22,6 @@ The current version of aRpsDCA is 1.0.1 and is available from [CRAN](http://cran
 Release notes:  
 v1.0.0 (2014-04-03): initial release  
 v1.0.1 (2015-06-21): S3 methods for formatting now correctly print curve family; handling of Np for D = 0 is corrected  
+v1.0.2 (2016-01-06): evaluation of hyperbolic-to-exponential declines with Di = Df now handled correctly
 
-(c) 2015 [dwt](http://www.github.com/derrickturk) | [terminus data science, LLC](http://www.terminusdatascience.com)
+(c) 2016 [dwt](http://www.github.com/derrickturk) | [terminus data science, LLC](http://www.terminusdatascience.com)
