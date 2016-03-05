@@ -1,4 +1,4 @@
-VER=1.0.2
+VER=1.0.3
 
 aRpsDCA_$(VER).tar.gz:
 	R CMD build .

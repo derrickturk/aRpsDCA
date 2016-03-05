@@ -1,10 +1,10 @@
 Package: aRpsDCA
-Version: 1.0.2
-Date: 2016-01-06
+Version: 1.0.3
+Date: 2016-03-05
 Title: Arps Decline Curve Analysis in R
 Authors@R: c(person("Derrick", "Turk", role = c("aut", "cre", "cph"),
                      email = "dwt@terminusdatascience.com"))
-Description: Functions for Arps decline-curve analysis on oil and gas data. Includes exponential, hyperbolic, harmonic, and hyperbolic-to-exponential models as well as the preceding with initial curtailment. Functions included for computing rate, cumulative production, instantaneous decline, EUR, time to economic limit, and performing least-squares best fits.
+Description: Functions for Arps decline-curve analysis on oil and gas data. Includes exponential, hyperbolic, harmonic, and hyperbolic-to-exponential models as well as the preceding with initial curtailment or a period of linear rate buildup. Functions included for computing rate, cumulative production, instantaneous decline, EUR, time to economic limit, and performing least-squares best fits.
 Imports:
     stats
 License: LGPL-2.1

@@ -21,6 +21,7 @@ export(
     rescale.by.time,
     curtail,
     arps.decline,
+    arps.with.buildup,
     arps.q,
     arps.Np,
     arps.D,
@@ -53,6 +54,9 @@ S3method(arps.D, hyperbolic)
 S3method(arps.q, hyp2exp)
 S3method(arps.Np, hyp2exp)
 S3method(arps.D, hyp2exp)
+S3method(arps.q, buildup)
+S3method(arps.Np, buildup)
+S3method(arps.D, buildup)
 S3method(arps.q, curtailed)
 S3method(arps.Np, curtailed)
 S3method(arps.D, curtailed)
@@ -61,4 +65,5 @@ S3method(format, arps)
 S3method(format, exponential)
 S3method(format, hyperbolic)
 S3method(format, hyp2exp)
+S3method(format, buildup)
 S3method(format, curtailed)
