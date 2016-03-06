@@ -24,21 +24,147 @@
 }
 
 \usage{
-best.exponential(q, t)
-best.hyperbolic(q, t)
-best.hyp2exp(q, t)
+best.exponential(q, t,
+  lower=c( # lower bounds
+    0, # qi > 0
+    0), # D > 0
+  upper=c( # upper bounds
+    max(q) * 3, # qi < qmax * 3
+    10) # = 0.99995 / [time] effective
+  )
+best.hyperbolic(q, t,
+  lower=c( # lower bounds
+    0,  # qi > 0
+    0,  # Di > 0
+    0), # b > 0
+  upper=c( # upper bounds
+    max(q) * 3, # qi < qmax * 3
+    10, # = 0.99995 / [time] effective
+    2)  # b <= 2.0
+  )
+best.hyp2exp(q, t,
+  lower=c( # lower bounds
+    0,  # qi > 0
+    0.35,  # Di > 0
+    0,  # b > 0
+    0), # Df > 0
+  upper=c( # upper bounds
+    max(q) * 3, # qi < qmax * 3
+    10, # = 0.99995 / [time] effective
+    2,  # b <= 2.0
+    0.35) # Df <= 0.35
+  )
 best.fit(q, t)
-best.exponential.from.Np(Np, t)
-best.hyperbolic.from.Np(Np, t)
-best.hyp2exp.from.Np(Np, t)
+best.exponential.from.Np(Np, t,
+  lower=c( # lower bounds
+    0, # qi > 0
+    0), # D > 0
+  upper=c( # upper bounds
+    max(Np) * 3, # qi < max(Np) * 3
+    10) # = 0.99995 / [time] effective)
+  )
+best.hyperbolic.from.Np(Np, t,
+  lower=c( # lower bounds
+    0,  # qi > 0
+    0,  # Di > 0
+    0), # b > 0
+  upper=c( # upper bounds
+    max(Np) * 3, # qi < max(Np) * 3
+    10, # = 0.99995 / [time] effective
+    2)  # b <= 2.0
+  )
+best.hyp2exp.from.Np(Np, t,
+  lower=c( # lower bounds
+    0,  # qi > 0
+    0.35,  # Di > 0
+    0,  # b > 0
+    0), # Df > 0
+  upper=c( # upper bounds
+    max(Np) * 3, # qi < max(Np) * 3
+    10, # = 0.99995 / [time] effective
+    5,  # b <= 2.0
+    0.35) # Df <= 0.35
+  )
 best.fit.from.Np(Np, t)
-best.exponential.curtailed(q, t)
-best.hyperbolic.curtailed(q, t)
-best.hyp2exp.curtailed(q, t)
+best.exponential.curtailed(q, t,
+  lower=c( # lower bounds
+    0, # qi > 0
+    0, # D > 0
+    0  # t.curtail > 0
+  ),
+  upper=c( # upper bounds
+    max(q) * 3, # qi < qmax * 3
+    10, # = 0.99995 / [time] effective
+    t[length(t)])
+  )
+best.hyperbolic.curtailed(q, t,
+  lower=c( # lower bounds
+    0,  # qi > 0
+    0,  # Di > 0
+    0,  # b > 0
+    0   # t.curtail > 0
+  ),
+  upper=c( # upper bounds
+    max(q) * 3, # qi < qmax * 3
+    10, # = 0.99995 / [time] effective
+    2,  # b <= 2.0
+    t[length(t)])
+  )
+best.hyp2exp.curtailed(q, t,
+  lower=c( # lower bounds
+    0,  # qi > 0
+    0.35,  # Di > 0
+    0,  # b > 0
+    0,  # Df > 0
+    0   # t.curtail > 0
+  ),
+  upper=c( # upper bounds
+    max(q) * 3, # qi < qmax * 3
+    10, # = 0.99995 / [time] effective
+    2,  # b <= 2.0
+    0.35, # Df <= 0.35
+    t[length(t)])
+  )
 best.curtailed.fit(q, t)
-best.exponential.curtailed.from.Np(Np, t)
-best.hyperbolic.curtailed.from.Np(Np, t)
-best.hyp2exp.curtailed.from.Np(Np, t)
+best.exponential.curtailed.from.Np(Np, t,
+  lower=c( # lower bounds
+    0, # qi > 0
+    0, # D > 0
+    0  # t.curtail > 0
+  ),
+  upper=c( # upper bounds
+    max(Np) * 3, # qi < qmax * 3
+    10, # = 0.99995 / [time] effective
+    t[length(t)])
+  )
+best.hyperbolic.curtailed.from.Np(Np, t,
+  lower=c( # lower bounds
+    0,  # qi > 0
+    0,  # Di > 0
+    0,  # b > 0
+    0   # t.curtail > 0
+  ),
+  upper=c( # upper bounds
+    max(Np) * 3, # qi < qmax * 3
+    10, # = 0.99995 / [time] effective
+    5,  # b <= 2.0
+    t[length(t)])
+  )
+best.hyp2exp.curtailed.from.Np(Np, t,
+  lower=c( # lower bounds
+    0,  # qi > 0
+    0.35,  # Di > 0
+    0,  # b > 0
+    0,  # Df > 0
+    0
+  ),
+  upper=c( # upper bounds
+    max(Np) * 3, # qi < qmax * 3
+    10, # = 0.99995 / [time] effective
+    5,  # b <= 2.0
+    0.35, # Df <= 0.35
+    t[length(t)])
+  )
 best.curtailed.fit.from.Np(Np, t)
 }
 
@@ -46,6 +172,8 @@ best.curtailed.fit.from.Np(Np, t)
   \item{q}{vector of rate data.}
   \item{Np}{vector of cumulative production data.}
   \item{t}{vector of times at which \code{q} or \code{Np} is measured.}
+  \item{lower}{lower bounds for decline parameters (sane defaults are provided)}
+  \item{upper}{upper bounds for decline parameters (sane defaults are provided)}
 }
 
 \value{
@@ -78,7 +206,9 @@ best.curtailed.fit.from.Np(Np, t)
     Best-fitting is carried out by minimizing the sum of squared error in the
     rate or cumulative forecast, using \code{\link{nlminb}} as the optimizer.
 
-    Appropriate bounds are applied to decline-curve parameters.
+    Appropriate bounds are applied to decline-curve parameters by default, but
+    may be altered using the \code{lower} and \code{upper} arguments to each
+    specific function.
 }
 
 \seealso{

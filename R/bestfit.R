@@ -22,7 +22,14 @@ sse <- function(q, forecast)
     sum((q - forecast) ^ 2)
 }
 
-best.exponential <- function(q, t)
+best.exponential <- function(q, t,
+  lower=c( # lower bounds
+    0, # qi > 0
+    0), # D > 0
+  upper=c( # upper bounds
+    max(q) * 3, # qi < qmax * 3
+    10) # = 0.99995 / [time] effective
+  )
 {
     if (length(q) != length(t) || length(q) <= 2)
         stop("Invalid lengths for q, t vectors.")
@@ -32,23 +39,26 @@ best.exponential <- function(q, t)
                    (log(q[2]) - log(q[1])) / (t[2] - t[1])),
                          # Di = decline from first to second point
 
-                    # cost function
+                 # cost function
                  function (guess) sse(q, exponential.q(guess[1], guess[2], t)),
 
-                 lower=c( # lower bounds
-                   0, # qi > 0
-                   0), # D > 0
-
-                 upper=c( # upper bounds
-                   max(q) * 3, # qi < qmax * 3
-                   10) # = 0.99995 / [time] effective
-    )
+                 # bounds
+                 lower=lower, upper=upper)
 
     list(decline=arps.decline(qi=res$par[1], Di=res$par[2]),
          sse=res$objective)
 }
 
-best.hyperbolic <- function(q, t)
+best.hyperbolic <- function(q, t,
+  lower=c( # lower bounds
+    0,  # qi > 0
+    0,  # Di > 0
+    0), # b > 0
+  upper=c( # upper bounds
+    max(q) * 3, # qi < qmax * 3
+    10, # = 0.99995 / [time] effective
+    2)  # b <= 2.0
+  )
 {
     if (length(q) != length(t) || length(q) <= 2)
         stop("Invalid lengths for q, t vectors.")
@@ -59,26 +69,29 @@ best.hyperbolic <- function(q, t)
                          # Di = decline from first to second point
                    1.5),   # right-ish for a lot of wells currently coming on
 
-                    # cost function
+                 # cost function
                  function (guess)
                      sse(q, hyperbolic.q(guess[1], guess[2], guess[3], t)),
 
-                 lower=c( # lower bounds
-                   0,  # qi > 0
-                   0,  # Di > 0
-                   0), # b > 0
-
-                 upper=c( # upper bounds
-                   max(q) * 3, # qi < qmax * 3
-                   10, # = 0.99995 / [time] effective
-                   5)  # don't get crazy
-    )
+                 # bounds
+                 lower=lower, upper=upper)
 
     list(decline=arps.decline(qi=res$par[1], Di=res$par[2], b=res$par[3]),
          sse=res$objective)
 }
 
-best.hyp2exp <- function(q, t)
+best.hyp2exp <- function(q, t,
+  lower=c( # lower bounds
+    0,  # qi > 0
+    0.35,  # Di > 0
+    0,  # b > 0
+    0), # Df > 0
+  upper=c( # upper bounds
+    max(q) * 3, # qi < qmax * 3
+    10, # = 0.99995 / [time] effective
+    2,  # b <= 2.0
+    0.35) # Df <= 0.35
+  )
 {
     if (length(q) != length(t) || length(q) <= 2)
         stop("Invalid lengths for q, t vectors.")
@@ -90,23 +103,13 @@ best.hyp2exp <- function(q, t)
                    1.5,  # b = right-ish for a lot of wells currently coming on
                    0.1), # Df = about 9% effective
 
-                    # cost function
+                 # cost function
                  function (guess)
                      sse(q,
                          hyp2exp.q(guess[1], guess[2], guess[3], guess[4], t)),
 
-                 lower=c( # lower bounds
-                   0,  # qi > 0
-                   0.35,  # Di > 0
-                   0,  # b > 0
-                   0), # Df > 0
-
-                 upper=c( # upper bounds
-                   max(q) * 3, # qi < qmax * 3
-                   10, # = 0.99995 / [time] effective
-                   5,  # don't get crazy
-                   0.35) # likewise
-    )
+                 # bounds
+                 lower=lower, upper=upper)
 
     list(decline=arps.decline(qi=res$par[1],
                               Di=res$par[2],
@@ -115,7 +118,17 @@ best.hyp2exp <- function(q, t)
          sse=res$objective)
 }
 
-best.exponential.curtailed <- function(q, t)
+best.exponential.curtailed <- function(q, t,
+  lower=c( # lower bounds
+    0, # qi > 0
+    0, # D > 0
+    0  # t.curtail > 0
+  ),
+  upper=c( # upper bounds
+    max(q) * 3, # qi < qmax * 3
+    10, # = 0.99995 / [time] effective
+    t[length(t)])
+  )
 {
     if (length(q) != length(t) || length(q) <= 2)
         stop("Invalid lengths for q, t vectors.")
@@ -127,31 +140,33 @@ best.exponential.curtailed <- function(q, t)
                    t[2]  # t.curtail = second t in vector
                    ),
 
-                    # cost function
+                 # cost function
                  function (guess)
                      sse(q,
                          curtailed.q(arps.decline(guess[1], guess[2]),
                                      guess[3], t)),
 
-                 lower=c( # lower bounds
-                   0, # qi > 0
-                   0, # D > 0
-                   0  # t.curtail > 0
-                 ),
-
-                 upper=c( # upper bounds
-                   max(q) * 3, # qi < qmax * 3
-                   10, # = 0.99995 / [time] effective
-                   t[length(t)]
-                 )
-    )
+                 # bounds
+                 lower=lower, upper=upper)
 
     list(decline=curtail(arps.decline(qi=res$par[1], Di=res$par[2]),
                          res$par[3]),
          sse=res$objective)
 }
 
-best.hyperbolic.curtailed <- function(q, t)
+best.hyperbolic.curtailed <- function(q, t,
+  lower=c( # lower bounds
+    0,  # qi > 0
+    0,  # Di > 0
+    0,  # b > 0
+    0   # t.curtail > 0
+  ),
+  upper=c( # upper bounds
+    max(q) * 3, # qi < qmax * 3
+    10, # = 0.99995 / [time] effective
+    2,  # b <= 2.0
+    t[length(t)])
+  )
 {
     if (length(q) != length(t) || length(q) <= 2)
         stop("Invalid lengths for q, t vectors.")
@@ -164,27 +179,15 @@ best.hyperbolic.curtailed <- function(q, t)
                    t[2]  # t.curtail = second t in vector
                    ),
 
-                    # cost function
+                 # cost function
                  function (guess)
                      sse(q,
                          curtailed.q(
                                  arps.decline(guess[1], guess[2], guess[3]),
                                  guess[4], t)),
 
-                 lower=c( # lower bounds
-                   0,  # qi > 0
-                   0,  # Di > 0
-                   0,  # b > 0
-                   0   # t.curtail > 0
-                 ),
-
-                 upper=c( # upper bounds
-                   max(q) * 3, # qi < qmax * 3
-                   10, # = 0.99995 / [time] effective
-                   5,  # don't get crazy
-                   t[length(t)]
-                 )
-    )
+                 # bounds
+                 lower=lower, upper=upper)
 
     list(decline=curtail(
              arps.decline(qi=res$par[1], Di=res$par[2], b=res$par[3]),
@@ -192,7 +195,21 @@ best.hyperbolic.curtailed <- function(q, t)
          sse=res$objective)
 }
 
-best.hyp2exp.curtailed <- function(q, t)
+best.hyp2exp.curtailed <- function(q, t,
+  lower=c( # lower bounds
+    0,  # qi > 0
+    0.35,  # Di > 0
+    0,  # b > 0
+    0,  # Df > 0
+    0   # t.curtail > 0
+  ),
+  upper=c( # upper bounds
+    max(q) * 3, # qi < qmax * 3
+    10, # = 0.99995 / [time] effective
+    2,  # b <= 2.0
+    0.35, # Df <= 0.35
+    t[length(t)])
+  )
 {
     if (length(q) != length(t) || length(q) <= 2)
         stop("Invalid lengths for q, t vectors.")
@@ -206,29 +223,15 @@ best.hyp2exp.curtailed <- function(q, t)
                    t[2]
                    ),
 
-                    # cost function
+                 # cost function
                  function (guess)
                      sse(q,
                          curtailed.q(
                              arps.decline(guess[1], guess[2], guess[3], guess[4]),
                              guess[5], t)),
 
-                 lower=c( # lower bounds
-                   0,  # qi > 0
-                   0.35,  # Di > 0
-                   0,  # b > 0
-                   0,  # Df > 0
-                   0
-                 ),
-
-                 upper=c( # upper bounds
-                   max(q) * 3, # qi < qmax * 3
-                   10, # = 0.99995 / [time] effective
-                   5,  # don't get crazy
-                   0.35, # likewise
-                   t[length(t)]
-                 )
-    )
+                 # bounds
+                 lower=lower, upper=upper)
 
     list(decline=curtail(arps.decline(qi=res$par[1],
                                       Di=res$par[2],
@@ -266,7 +269,14 @@ best.curtailed.fit <- function(q, t)
         h2e
 }
 
-best.exponential.from.Np <- function(Np, t)
+best.exponential.from.Np <- function(Np, t,
+  lower=c( # lower bounds
+    0, # qi > 0
+    0), # D > 0
+  upper=c( # upper bounds
+    max(Np) * 3, # qi < max(Np) * 3
+    10) # = 0.99995 / [time] effective)
+  )
 {
     if (length(Np) != length(t) || length(Np) <= 2)
         stop("Invalid lengths for Np, t vectors.")
@@ -276,23 +286,26 @@ best.exponential.from.Np <- function(Np, t)
                    (log(Np[2] - Np[1]) - log(Np[1])) / (t[2] - t[1])),
                          # Di = decline from first to second point
 
-                    # cost function
+                 # cost function
                  function (guess) sse(Np, exponential.Np(guess[1], guess[2], t)),
 
-                 lower=c( # lower bounds
-                   0, # qi > 0
-                   0), # D > 0
-
-                 upper=c( # upper bounds
-                   max(Np) * 3, # qi < max(Np) * 3
-                   10) # = 0.99995 / [time] effective
-    )
+                 # bounds
+                 lower=lower, upper=upper)
 
     list(decline=arps.decline(qi=res$par[1], Di=res$par[2]),
          sse=res$objective)
 }
 
-best.hyperbolic.from.Np <- function(Np, t)
+best.hyperbolic.from.Np <- function(Np, t,
+  lower=c( # lower bounds
+    0,  # qi > 0
+    0,  # Di > 0
+    0), # b > 0
+  upper=c( # upper bounds
+    max(Np) * 3, # qi < max(Np) * 3
+    10, # = 0.99995 / [time] effective
+    2)  # b <= 2.0
+  )
 {
     if (length(Np) != length(t) || length(Np) <= 2)
         stop("Invalid lengths for Np, t vectors.")
@@ -303,26 +316,29 @@ best.hyperbolic.from.Np <- function(Np, t)
                          # Di = decline from first to second point
                    1.5),   # right-ish for a lot of wells currently coming on
 
-                    # cost function
+                 # cost function
                  function (guess)
                      sse(Np, hyperbolic.Np(guess[1], guess[2], guess[3], t)),
 
-                 lower=c( # lower bounds
-                   0,  # qi > 0
-                   0,  # Di > 0
-                   0), # b > 0
-
-                 upper=c( # upper bounds
-                   max(Np) * 3, # qi < max(Np) * 3
-                   10, # = 0.99995 / [time] effective
-                   5)  # don't get crazy
-    )
+                 # bounds
+                 lower=lower, upper=upper)
 
     list(decline=arps.decline(qi=res$par[1], Di=res$par[2], b=res$par[3]),
          sse=res$objective)
 }
 
-best.hyp2exp.from.Np <- function(Np, t)
+best.hyp2exp.from.Np <- function(Np, t,
+  lower=c( # lower bounds
+    0,  # qi > 0
+    0.35,  # Di > 0
+    0,  # b > 0
+    0), # Df > 0
+  upper=c( # upper bounds
+    max(Np) * 3, # qi < max(Np) * 3
+    10, # = 0.99995 / [time] effective
+    5,  # b <= 2.0
+    0.35) # Df <= 0.35
+  )
 {
     if (length(Np) != length(t) || length(Np) <= 2)
         stop("Invalid lengths for Np, t vectors.")
@@ -334,23 +350,13 @@ best.hyp2exp.from.Np <- function(Np, t)
                    1.5,  # b = right-ish for a lot of wells currently coming on
                    0.1), # Df = about 9% effective
 
-                    # cost function
+                 # cost function
                  function (guess)
                      sse(Np,
                          hyp2exp.Np(guess[1], guess[2], guess[3], guess[4], t)),
 
-                 lower=c( # lower bounds
-                   0,  # qi > 0
-                   0.35,  # Di > 0
-                   0,  # b > 0
-                   0), # Df > 0
-
-                 upper=c( # upper bounds
-                   max(Np) * 3, # qi < max(Np) * 3
-                   10, # = 0.99995 / [time] effective
-                   5,  # don't get crazy
-                   0.35) # likewise
-    )
+                 # bounds
+                 lower=lower, upper=upper)
 
     list(decline=arps.decline(qi=res$par[1],
                               Di=res$par[2],
@@ -359,7 +365,17 @@ best.hyp2exp.from.Np <- function(Np, t)
          sse=res$objective)
 }
 
-best.exponential.curtailed.from.Np <- function(Np, t)
+best.exponential.curtailed.from.Np <- function(Np, t,
+  lower=c( # lower bounds
+    0, # qi > 0
+    0, # D > 0
+    0  # t.curtail > 0
+  ),
+  upper=c( # upper bounds
+    max(Np) * 3, # qi < qmax * 3
+    10, # = 0.99995 / [time] effective
+    t[length(t)])
+  )
 {
     if (length(Np) != length(t) || length(Np) <= 2)
         stop("Invalid lengths for Np, t vectors.")
@@ -371,31 +387,33 @@ best.exponential.curtailed.from.Np <- function(Np, t)
                    t[2]  # t.curtail = second t in vector
                    ),
 
-                    # cost function
+                 # cost function
                  function (guess)
                      sse(Np,
                          curtailed.Np(arps.decline(guess[1], guess[2]),
                                      guess[3], t)),
 
-                 lower=c( # lower bounds
-                   0, # qi > 0
-                   0, # D > 0
-                   0  # t.curtail > 0
-                 ),
-
-                 upper=c( # upper bounds
-                   max(Np) * 3, # qi < qmax * 3
-                   10, # = 0.99995 / [time] effective
-                   t[length(t)]
-                 )
-    )
+                 # bounds
+                 lower=lower, upper=upper)
 
     list(decline=curtail(arps.decline(qi=res$par[1], Di=res$par[2]),
                          res$par[3]),
          sse=res$objective)
 }
 
-best.hyperbolic.curtailed.from.Np <- function(Np, t)
+best.hyperbolic.curtailed.from.Np <- function(Np, t,
+  lower=c( # lower bounds
+    0,  # qi > 0
+    0,  # Di > 0
+    0,  # b > 0
+    0   # t.curtail > 0
+  ),
+  upper=c( # upper bounds
+    max(Np) * 3, # qi < qmax * 3
+    10, # = 0.99995 / [time] effective
+    5,  # b <= 2.0
+    t[length(t)])
+  )
 {
     if (length(Np) != length(t) || length(Np) <= 2)
         stop("Invalid lengths for Np, t vectors.")
@@ -408,27 +426,15 @@ best.hyperbolic.curtailed.from.Np <- function(Np, t)
                    t[2]  # t.curtail = second t in vector
                    ),
 
-                    # cost function
+                 # cost function
                  function (guess)
                      sse(Np,
                          curtailed.Np(
                                  arps.decline(guess[1], guess[2], guess[3]),
                                  guess[4], t)),
 
-                 lower=c( # lower bounds
-                   0,  # qi > 0
-                   0,  # Di > 0
-                   0,  # b > 0
-                   0   # t.curtail > 0
-                 ),
-
-                 upper=c( # upper bounds
-                   max(Np) * 3, # qi < qmax * 3
-                   10, # = 0.99995 / [time] effective
-                   5,  # don't get crazy
-                   t[length(t)]
-                 )
-    )
+                 # bounds
+                 lower=lower, upper=upper)
 
     list(decline=curtail(
              arps.decline(qi=res$par[1], Di=res$par[2], b=res$par[3]),
@@ -436,7 +442,21 @@ best.hyperbolic.curtailed.from.Np <- function(Np, t)
          sse=res$objective)
 }
 
-best.hyp2exp.curtailed.from.Np <- function(Np, t)
+best.hyp2exp.curtailed.from.Np <- function(Np, t,
+  lower=c( # lower bounds
+    0,  # qi > 0
+    0.35,  # Di > 0
+    0,  # b > 0
+    0,  # Df > 0
+    0
+  ),
+  upper=c( # upper bounds
+    max(Np) * 3, # qi < qmax * 3
+    10, # = 0.99995 / [time] effective
+    5,  # b <= 2.0
+    0.35, # Df <= 0.35
+    t[length(t)])
+  )
 {
     if (length(Np) != length(t) || length(Np) <= 2)
         stop("Invalid lengths for Np, t vectors.")
@@ -450,29 +470,15 @@ best.hyp2exp.curtailed.from.Np <- function(Np, t)
                    t[2]
                    ),
 
-                    # cost function
+                 # cost function
                  function (guess)
                      sse(Np,
                          curtailed.Np(
                              arps.decline(guess[1], guess[2], guess[3], guess[4]),
                              guess[5], t)),
 
-                 lower=c( # lower bounds
-                   0,  # qi > 0
-                   0.35,  # Di > 0
-                   0,  # b > 0
-                   0,  # Df > 0
-                   0
-                 ),
-
-                 upper=c( # upper bounds
-                   max(Np) * 3, # qi < qmax * 3
-                   10, # = 0.99995 / [time] effective
-                   5,  # don't get crazy
-                   0.35, # likewise
-                   t[length(t)]
-                 )
-    )
+                 # bounds
+                 lower=lower, upper=upper)
 
     list(decline=curtail(arps.decline(qi=res$par[1],
                                       Di=res$par[2],
