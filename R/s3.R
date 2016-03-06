@@ -114,12 +114,12 @@ print.arps <- function(x, ...)
     invisible(x)
 }
 
-arps.with.buildup <- function(decl, initial.rate, time.to.peak, peak.rate)
+arps.with.buildup <- function(decl, initial.rate, time.to.peak)
 {
     res <- list(decline=decl, 
                 initial.rate=initial.rate,
                 time.to.peak=time.to.peak,
-                peak.rate=peak.rate)
+                peak.rate=arps.q(decl, time.to.peak))
     class(res) <- c("buildup", "arps")
     res
 }
