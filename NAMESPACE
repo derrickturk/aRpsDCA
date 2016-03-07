@@ -46,7 +46,11 @@ export(
     best.exponential.with.buildup,
     best.hyperbolic.with.buildup,
     best.hyp2exp.with.buildup,
-    best.fit.with.buildup
+    best.fit.with.buildup,
+    best.exponential.from.Np.with.buildup,
+    best.hyperbolic.from.Np.with.buildup,
+    best.hyp2exp.from.Np.with.buildup,
+    best.fit.from.Np.with.buildup
 )
 
 S3method(arps.q, exponential)

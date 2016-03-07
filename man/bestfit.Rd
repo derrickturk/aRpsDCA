@@ -20,6 +20,10 @@
 \alias{best.hyperbolic.with.buildup}
 \alias{best.hyp2exp.with.buildup}
 \alias{best.fit.with.buildup}
+\alias{best.exponential.from.Np.with.buildup}
+\alias{best.hyperbolic.from.Np.with.buildup}
+\alias{best.hyp2exp.from.Np.with.buildup}
+\alias{best.fit.from.Np.with.buildup}
 
 \title{Best-fitting of Arps decline curves}
 
@@ -193,7 +197,7 @@ best.exponential.with.buildup(q, t,
     0, # initial rate
     0), # time to peak > 0
   upper=c( # upper bounds
-    max(q) * 3, # qi < qmax * 3
+    max(q) * 5, # qi < qmax * 5
     10), # = 0.99995 / [time] effective
   initial.rate=q[1], time.to.peak=t[which.max(q)])
 
@@ -205,7 +209,7 @@ best.hyperbolic.with.buildup(q, t,
     0,  # initial rate
     0), # time to peak > 0
   upper=c( # upper bounds
-    max(q) * 3, # qi < qmax * 3
+    max(q) * 5, # qi < qmax * 5
     10, # = 0.99995 / [time] effective
     2),  # b <= 2.0
   initial.rate=q[1], time.to.peak=t[which.max(q)])
@@ -219,13 +223,51 @@ best.hyp2exp.with.buildup(q, t,
     0,  # initial rate
     0), # time to peak > 0
   upper=c( # upper bounds
-    max(q) * 3, # qi < qmax * 3
+    max(q) * 5, # qi < qmax * 5
     10, # = 0.99995 / [time] effective
     2,  # b <= 2.0
     0.35), # Df <= 0.35
   initial.rate=q[1], time.to.peak=t[which.max(q)])
 
 best.fit.with.buildup(q, t)
+
+best.exponential.from.Np.with.buildup(Np, t,
+  lower=c( # lower bounds
+    0, # qi > 0
+    0), # D > 0
+  upper=c( # upper bounds
+    max(Np) * 3, # qi < max(Np) * 3
+    10), # = 0.99995 / [time] effective
+  initial.rate=Np[1] / t[1],
+  time.to.peak=(t[which.max(diff(Np))] + t[which.max(diff(Np)) + 1]) / 2.0)
+
+best.hyperbolic.from.Np.with.buildup(Np, t,
+  lower=c( # lower bounds
+    0,  # qi > 0
+    0,  # Di > 0
+    0), # b > 0
+  upper=c( # upper bounds
+    max(Np) * 3, # qi < max(Np) * 3
+    10, # = 0.99995 / [time] effective
+    2), # b <= 2.0
+  initial.rate=Np[1] / t[1],
+  time.to.peak=(t[which.max(diff(Np))] + t[which.max(diff(Np)) + 1]) / 2.0)
+
+best.hyp2exp.from.Np.with.buildup(Np, t,
+  lower=c( # lower bounds
+    0,  # qi > 0
+    0.35,  # Di > 0
+    0,  # b > 0
+    0), # Df > 0
+  upper=c( # upper bounds
+    max(Np) * 3, # qi < max(Np) * 3
+    10, # = 0.99995 / [time] effective
+    5,  # b <= 2.0
+    0.35), # Df <= 0.35
+  initial.rate=Np[1] / t[1],
+  time.to.peak=(t[which.max(diff(Np))] + t[which.max(diff(Np)) + 1]) / 2.0)
+
+best.fit.from.Np.with.buildup(Np, t)
 }
 
 \arguments{
@@ -264,9 +306,13 @@ best.fit.with.buildup(q, t)
     declines (as from \code{\link{curtail}}).
 
     \code{best.exponential.with.buildup}, \code{best.hyperbolic.with.buildup},
-    \code{best.hyp2exp.with.buildup}, and \code{best.fit.with.buildup} work as
-    the corresponding functions above, but will return a fit including a linear
-    buildup portion (as from \code{\link{arps.with.buildup}}).
+    \code{best.hyp2exp.with.buildup}, \code{best.fit.with.buildup},
+    \code{best.exponential.from.Np.with.buildup},
+    \code{best.hyperbolic.from.Np.with.buildup},
+    \code{best.hyp2exp.from.Np.with.buildup},
+    and \code{best.fit.from.Np.with.buildup} work as the corresponding
+    functions above, but will return a fit including a linear buildup
+    portion (as from \code{\link{arps.with.buildup}}).
 }
 
 \details{
