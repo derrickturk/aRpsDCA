@@ -515,3 +515,114 @@ best.curtailed.fit.from.Np <- function(Np, t)
     else
         h2e
 }
+
+best.exponential.with.buildup <- function(q, t,
+  lower=c( # lower bounds
+    0,  # qi > 0
+    0), # D > 0
+  upper=c( # upper bounds
+    max(q) * 3, # qi < qmax * 3
+    10),        # = 0.99995 / [time] effective
+  initial.rate=q[1], time.to.peak=t[which.max(q)])
+{
+    if (length(q) != length(t) || length(q) <= 2)
+        stop("Invalid lengths for q, t vectors.")
+
+    res <- nlminb(c( # initial guesses
+                   q[1], # qi = q(t = first t in vector)
+                   (log(q[2]) - log(q[1])) / (t[2] - t[1])),
+                         # Di = decline from first to second point
+
+                 # cost function
+                 function (guess) sse(q, arps.q(arps.with.buildup(
+                   arps.decline(guess[1], guess[2]), initial.rate,
+                   time.to.peak), t)),
+
+                 # bounds
+                 lower=lower, upper=upper)
+
+    list(decline=arps.with.buildup(arps.decline(qi=res$par[1], Di=res$par[2]),
+           initial.rate, time.to.peak), sse=res$objective)
+}
+
+best.hyperbolic.with.buildup <- function(q, t,
+  lower=c( # lower bounds
+    0,  # qi > 0
+    0,  # Di > 0
+    0), # b > 0
+  upper=c( # upper bounds
+    max(q) * 3, # qi < qmax * 3
+    10, # = 0.99995 / [time] effective
+    2), # b <= 2.0
+  initial.rate=q[1], time.to.peak=t[which.max(q)])
+{
+    if (length(q) != length(t) || length(q) <= 2)
+        stop("Invalid lengths for q, t vectors.")
+
+    res <- nlminb(c( # initial guesses
+                   q[1], # qi = q(t = first t in vector)
+                   (log(q[2]) - log(q[1])) / (t[2] - t[1]),
+                         # Di = decline from first to second point
+                   1.5),   # right-ish for a lot of wells currently coming on
+
+                 # cost function
+                 function (guess) sse(q, arps.q(arps.with.buildup(
+                   arps.decline(guess[1], guess[2], guess[3]),
+                   initial.rate, time.to.peak), t)),
+
+                 # bounds
+                 lower=lower, upper=upper)
+
+    list(decline=arps.with.buildup(arps.decline(qi=res$par[1], Di=res$par[2],
+           b=res$par[3]), initial.rate, time.to.peak), sse=res$objective)
+}
+
+best.hyp2exp.with.buildup <- function(q, t,
+  lower=c( # lower bounds
+    0,  # qi > 0
+    0.35,  # Di > 0
+    0,  # b > 0
+    0), # Df > 0
+  upper=c( # upper bounds
+    max(q) * 3, # qi < qmax * 3
+    10, # = 0.99995 / [time] effective
+    2,  # b <= 2.0
+    0.35), # Df <= 0.35
+  initial.rate=q[1], time.to.peak=t[which.max(q)])
+{
+    if (length(q) != length(t) || length(q) <= 2)
+        stop("Invalid lengths for q, t vectors.")
+
+    res <- nlminb(c( # initial guesses
+                   q[1], # qi = q(t = first t in vector)
+                   (log(q[2]) - log(q[1])) / (t[2] - t[1]),
+                         # Di = decline from first to second point
+                   1.5,  # b = right-ish for a lot of wells currently coming on
+                   0.1), # Df = about 9% effective
+
+                 # cost function
+                 function (guess) sse(q, arps.q(arps.with.buildup(
+                   arps.decline(guess[1], guess[2], guess[3], guess[4]),
+                   initial.rate, time.to.peak), t)),
+
+                 # bounds
+                 lower=lower, upper=upper)
+
+    list(decline=arps.with.buildup(arps.decline(qi=res$par[1], Di=res$par[2],
+           b=res$par[3], Df=res$par[4]), initial.rate, time.to.peak),
+         sse=res$objective)
+}
+
+best.fit.with.buildup <- function(q, t)
+{
+    exp <- best.exponential.with.buildup(q, t)
+    hyp <- best.hyperbolic.with.buildup(q, t)
+    h2e <- best.hyp2exp.with.buildup(q, t)
+
+    if (exp$sse <= hyp$sse && exp$sse <= h2e$sse)
+        exp
+    else if (hyp$sse <= exp$sse && hyp$sse <= h2e$sse)
+        hyp
+    else
+        h2e
+}
