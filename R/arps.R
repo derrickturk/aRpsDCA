@@ -17,8 +17,8 @@
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301
 # USA
 
-HARMONIC_EPS <- 1e-3
-EXPONENTIAL_EPS <- 1e-3
+HARMONIC_EPS <- 1e-10
+EXPONENTIAL_EPS <- 1e-10
 
 exponential.q <- function (qi, D, t)
 {
