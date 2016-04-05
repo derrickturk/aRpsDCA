@@ -24,9 +24,10 @@ fitme.exponential.Np <- exponential.Np(
     1000, # Bbl/d
     as.nominal(0.70), # / year
     fitme.exponential.t
-)
+) * rnorm(n=length(fitme.exponential.t), mean=1, sd=0.1) # perturb
 
-exponential.fit <- best.exponential.from.Np(fitme.exponential.Np, fitme.exponential.t)
+exponential.fit <- best.exponential.from.interval(
+  diff(fitme.exponential.Np), fitme.exponential.t[2:length(fitme.exponential.t)])
 cat(paste("SSE:", exponential.fit$sse))
 dev.new()
 plot(fitme.exponential.Np ~ fitme.exponential.t, main="Exponential Fit",
@@ -41,9 +42,10 @@ fitme.hyperbolic.Np <- hyperbolic.Np(
     as.nominal(0.70), # / year
     1.9,
     fitme.hyperbolic.t
-)
+) * rnorm(n=length(fitme.hyperbolic.t), mean=1, sd=0.1) # perturb
 
-hyperbolic.fit <- best.hyperbolic.from.Np(fitme.hyperbolic.Np, fitme.hyperbolic.t)
+hyperbolic.fit <- best.hyperbolic.from.interval(
+  diff(fitme.hyperbolic.Np), fitme.hyperbolic.t[2:length(fitme.hyperbolic.t)])
 cat(paste("SSE:", hyperbolic.fit$sse))
 dev.new()
 plot(fitme.hyperbolic.Np ~ fitme.hyperbolic.t, main="Hyperbolic Fit",
@@ -59,9 +61,10 @@ fitme.hyp2exp.Np <- hyp2exp.Np(
     1.9,
     as.nominal(0.15), # / year
     fitme.hyp2exp.t
-)
+) * rnorm(n=length(fitme.hyp2exp.t), mean=1, sd=0.1) # perturb
 
-hyp2exp.fit <- best.hyp2exp.from.Np(fitme.hyp2exp.Np, fitme.hyp2exp.t)
+hyp2exp.fit <- best.hyp2exp.from.interval(
+  diff(fitme.hyp2exp.Np), fitme.hyp2exp.t[2:length(fitme.hyp2exp.t)])
 cat(paste("SSE:", hyp2exp.fit$sse))
 dev.new()
 plot(fitme.hyp2exp.Np ~ fitme.hyp2exp.t, main="Hyperbolic-to-Exponential Fit",
@@ -70,7 +73,8 @@ lines(arps.Np(hyp2exp.fit$decline, fitme.hyp2exp.t) ~ fitme.hyp2exp.t,
       col="red")
 legend("topright", pch=c(1, NA), lty=c(NA, 1), col=c("blue", "red"), legend=c("Actual", "Fit"))
 
-overall.best <- best.fit.from.Np(fitme.hyp2exp.Np, fitme.hyp2exp.t)
+overall.best <- best.fit.from.interval(
+  diff(fitme.hyp2exp.Np), fitme.hyp2exp.t[2:length(fitme.hyp2exp.t)])
 cat(paste("SSE:", overall.best$sse))
 dev.new()
 plot(fitme.hyp2exp.Np ~ fitme.hyp2exp.t, main="Overall Best Fit (h2e Data)",
@@ -78,5 +82,3 @@ plot(fitme.hyp2exp.Np ~ fitme.hyp2exp.t, main="Overall Best Fit (h2e Data)",
 lines(arps.Np(overall.best$decline, fitme.hyp2exp.t) ~ fitme.hyp2exp.t,
       col="red")
 legend("topright", pch=c(1, NA), lty=c(NA, 1), col=c("blue", "red"), legend=c("Actual", "Fit"))
-
-

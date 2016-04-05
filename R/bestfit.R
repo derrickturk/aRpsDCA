@@ -279,6 +279,11 @@ best.exponential.from.Np <- function(Np, t,
     10) # = 0.99995 / [time] effective)
   )
 {
+    # drop leading zero records
+    which.nz <- Np != 0
+    Np <- Np[which.nz]
+    t <- t[which.nz]
+
     if (length(Np) != length(t) || length(Np) <= 2)
         stop("Invalid lengths for Np, t vectors.")
 
@@ -338,6 +343,11 @@ best.hyperbolic.from.Np <- function(Np, t,
     2)  # b <= 2.0
   )
 {
+    # drop leading zero records
+    which.nz <- Np != 0
+    Np <- Np[which.nz]
+    t <- t[which.nz]
+
     if (length(Np) != length(t) || length(Np) <= 2)
         stop("Invalid lengths for Np, t vectors.")
 
@@ -402,6 +412,11 @@ best.hyp2exp.from.Np <- function(Np, t,
     0.35) # Df <= 0.35
   )
 {
+    # drop leading zero records
+    which.nz <- Np != 0
+    Np <- Np[which.nz]
+    t <- t[which.nz]
+
     if (length(Np) != length(t) || length(Np) <= 2)
         stop("Invalid lengths for Np, t vectors.")
 
@@ -477,6 +492,11 @@ best.exponential.curtailed.from.Np <- function(Np, t,
     t[length(t)])
   )
 {
+    # drop leading zero records
+    which.nz <- Np != 0
+    Np <- Np[which.nz]
+    t <- t[which.nz]
+
     if (length(Np) != length(t) || length(Np) <= 2)
         stop("Invalid lengths for Np, t vectors.")
 
@@ -549,6 +569,11 @@ best.hyperbolic.curtailed.from.Np <- function(Np, t,
     t[length(t)])
   )
 {
+    # drop leading zero records
+    which.nz <- Np != 0
+    Np <- Np[which.nz]
+    t <- t[which.nz]
+
     if (length(Np) != length(t) || length(Np) <= 2)
         stop("Invalid lengths for Np, t vectors.")
 
@@ -631,6 +656,11 @@ best.hyp2exp.curtailed.from.Np <- function(Np, t,
     t[length(t)])
   )
 {
+    # drop leading zero records
+    which.nz <- Np != 0
+    Np <- Np[which.nz]
+    t <- t[which.nz]
+
     if (length(Np) != length(t) || length(Np) <= 2)
         stop("Invalid lengths for Np, t vectors.")
 
@@ -747,11 +777,11 @@ best.curtailed.fit.from.Np <- function(Np, t)
         h2e
 }
 
-best.curtailed.fit.from.interval <- function(volume, t, t.begin)
+best.curtailed.fit.from.interval <- function(volume, t, t.begin=0.0)
 {
-    exp <- best.exponential.curtailed.from.Np(volume, t, t.begin)
-    hyp <- best.hyperbolic.curtailed.from.Np(volume, t, t.begin)
-    h2e <- best.hyp2exp.curtailed.from.Np(volume, t, t.begin)
+    exp <- best.exponential.curtailed.from.interval(volume, t, t.begin)
+    hyp <- best.hyperbolic.curtailed.from.interval(volume, t, t.begin)
+    h2e <- best.hyp2exp.curtailed.from.interval(volume, t, t.begin)
 
     if (exp$sse <= hyp$sse && exp$sse <= h2e$sse)
         exp
@@ -883,6 +913,11 @@ best.exponential.from.Np.with.buildup <- function(Np, t,
   initial.rate=Np[1] / t[1],
   time.to.peak=(t[which.max(diff(Np))] + t[which.max(diff(Np)) + 1]) / 2.0)
 {
+    # drop leading zero records
+    which.nz <- Np != 0
+    Np <- Np[which.nz]
+    t <- t[which.nz]
+
     if (length(Np) != length(t) || length(Np) <= 2)
         stop("Invalid lengths for Np, t vectors.")
 
@@ -951,6 +986,11 @@ best.hyperbolic.from.Np.with.buildup <- function(Np, t,
   initial.rate=Np[1] / t[1],
   time.to.peak=(t[which.max(diff(Np))] + t[which.max(diff(Np)) + 1]) / 2.0)
 {
+    # drop leading zero records
+    which.nz <- Np != 0
+    Np <- Np[which.nz]
+    t <- t[which.nz]
+
     if (length(Np) != length(t) || length(Np) <= 2)
         stop("Invalid lengths for Np, t vectors.")
 
@@ -1023,6 +1063,11 @@ best.hyp2exp.from.Np.with.buildup <- function(Np, t,
   initial.rate=Np[1] / t[1],
   time.to.peak=(t[which.max(diff(Np))] + t[which.max(diff(Np)) + 1]) / 2.0)
 {
+    # drop leading zero records
+    which.nz <- Np != 0
+    Np <- Np[which.nz]
+    t <- t[which.nz]
+
     if (length(Np) != length(t) || length(Np) <= 2)
         stop("Invalid lengths for Np, t vectors.")
 
@@ -1101,7 +1146,7 @@ best.fit.from.Np.with.buildup <- function(Np, t)
         h2e
 }
 
-best.fit.from.interval.with.buildup <- function(Np, t, t.begin=0.0)
+best.fit.from.interval.with.buildup <- function(volume, t, t.begin=0.0)
 {
     exp <- best.exponential.from.interval.with.buildup(volume, t, t.begin)
     hyp <- best.hyperbolic.from.interval.with.buildup(volume, t, t.begin)

@@ -20,13 +20,14 @@
 library(aRpsDCA)
 
 fitme.exponential.t <- seq(0, 5, 1 / 12) # 5 years
-fitme.exponential.Np <- exponential.Np(
+fitme.exponential.Np <- arps.Np(arps.with.buildup(arps.decline(
     1000, # Bbl/d
-    as.nominal(0.70), # / year
+    as.nominal(0.70)), # / year
+    250, 1.5 / 12),
     fitme.exponential.t
 )
 
-exponential.fit <- best.exponential.from.Np(fitme.exponential.Np, fitme.exponential.t)
+exponential.fit <- best.exponential.from.Np.with.buildup(fitme.exponential.Np, fitme.exponential.t)
 cat(paste("SSE:", exponential.fit$sse))
 dev.new()
 plot(fitme.exponential.Np ~ fitme.exponential.t, main="Exponential Fit",
@@ -36,14 +37,15 @@ lines(arps.Np(exponential.fit$decline, fitme.exponential.t) ~ fitme.exponential.
 legend("topright", pch=c(1, NA), lty=c(NA, 1), col=c("blue", "red"), legend=c("Actual", "Fit"))
 
 fitme.hyperbolic.t <- seq(0, 5, 1 / 12) # 5 years
-fitme.hyperbolic.Np <- hyperbolic.Np(
+fitme.hyperbolic.Np <- arps.Np(arps.with.buildup(arps.decline(
     1000, # Bbl/d
     as.nominal(0.70), # / year
-    1.9,
+    1.9),
+    250, 1.5 / 12),
     fitme.hyperbolic.t
 )
 
-hyperbolic.fit <- best.hyperbolic.from.Np(fitme.hyperbolic.Np, fitme.hyperbolic.t)
+hyperbolic.fit <- best.hyperbolic.from.Np.with.buildup(fitme.hyperbolic.Np, fitme.hyperbolic.t)
 cat(paste("SSE:", hyperbolic.fit$sse))
 dev.new()
 plot(fitme.hyperbolic.Np ~ fitme.hyperbolic.t, main="Hyperbolic Fit",
@@ -53,15 +55,16 @@ lines(arps.Np(hyperbolic.fit$decline, fitme.hyperbolic.t) ~ fitme.hyperbolic.t,
 legend("topright", pch=c(1, NA), lty=c(NA, 1), col=c("blue", "red"), legend=c("Actual", "Fit"))
 
 fitme.hyp2exp.t <- seq(0, 5, 1 / 12) # 5 years
-fitme.hyp2exp.Np <- hyp2exp.Np(
+fitme.hyp2exp.Np <- arps.Np(arps.with.buildup(arps.decline(
     1000, # Bbl/d
     as.nominal(0.70), # / year
     1.9,
-    as.nominal(0.15), # / year
+    as.nominal(0.15)), # / year
+    250, 1.5 / 12),
     fitme.hyp2exp.t
 )
 
-hyp2exp.fit <- best.hyp2exp.from.Np(fitme.hyp2exp.Np, fitme.hyp2exp.t)
+hyp2exp.fit <- best.hyp2exp.from.Np.with.buildup(fitme.hyp2exp.Np, fitme.hyp2exp.t)
 cat(paste("SSE:", hyp2exp.fit$sse))
 dev.new()
 plot(fitme.hyp2exp.Np ~ fitme.hyp2exp.t, main="Hyperbolic-to-Exponential Fit",
@@ -70,7 +73,7 @@ lines(arps.Np(hyp2exp.fit$decline, fitme.hyp2exp.t) ~ fitme.hyp2exp.t,
       col="red")
 legend("topright", pch=c(1, NA), lty=c(NA, 1), col=c("blue", "red"), legend=c("Actual", "Fit"))
 
-overall.best <- best.fit.from.Np(fitme.hyp2exp.Np, fitme.hyp2exp.t)
+overall.best <- best.fit.from.Np.with.buildup(fitme.hyp2exp.Np, fitme.hyp2exp.t)
 cat(paste("SSE:", overall.best$sse))
 dev.new()
 plot(fitme.hyp2exp.Np ~ fitme.hyp2exp.t, main="Overall Best Fit (h2e Data)",
