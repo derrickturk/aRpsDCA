@@ -141,10 +141,10 @@ arps.Np.buildup <- function(decl, t)
     buildup.m <- (decl$peak.rate - decl$initial.rate) / decl$time.to.peak
     res[which.buildup] <- buildup.m * t[which.buildup]^2 * 0.5 +
       decl$initial.rate * t[which.buildup]
-    res[-which.buildup] <- arps.Np(decl$decline, t[-which.buildup])
+    res[-which.buildup] <- (arps.Np(decl$decline, t[-which.buildup])
       - arps.Np(decl$decline, decl$time.to.peak)
-      + (buildup.m * decl$time.to.peak^2 +
-         decl$initial.rate * decl$time.to.peak)
+      + (buildup.m * decl$time.to.peak^2 * 0.5 +
+         decl$initial.rate * decl$time.to.peak))
     res
 }
 
