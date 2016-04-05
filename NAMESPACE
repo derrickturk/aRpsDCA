@@ -32,9 +32,13 @@ export(
     best.hyp2exp,
     best.fit,
     best.exponential.from.Np,
+    best.exponential.from.interval,
     best.hyperbolic.from.Np,
+    best.hyperbolic.from.interval,
     best.hyp2exp.from.Np,
+    best.hyp2exp.from.interval,
     best.fit.from.Np,
+    best.fit.from.interval,
     best.exponential.curtailed,
     best.hyperbolic.curtailed,
     best.hyp2exp.curtailed,
@@ -43,6 +47,10 @@ export(
     best.hyperbolic.curtailed.from.Np,
     best.hyp2exp.curtailed.from.Np,
     best.curtailed.fit.from.Np,
+    best.exponential.curtailed.from.interval,
+    best.hyperbolic.curtailed.from.interval,
+    best.hyp2exp.curtailed.from.interval,
+    best.curtailed.fit.from.interval,
     best.exponential.with.buildup,
     best.hyperbolic.with.buildup,
     best.hyp2exp.with.buildup,
@@ -50,7 +58,11 @@ export(
     best.exponential.from.Np.with.buildup,
     best.hyperbolic.from.Np.with.buildup,
     best.hyp2exp.from.Np.with.buildup,
-    best.fit.from.Np.with.buildup
+    best.fit.from.Np.with.buildup,
+    best.exponential.from.interval.with.buildup,
+    best.hyperbolic.from.interval.with.buildup,
+    best.hyp2exp.from.interval.with.buildup,
+    best.fit.from.interval.with.buildup
 )
 
 S3method(arps.q, exponential)
