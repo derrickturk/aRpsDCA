@@ -22,6 +22,7 @@ The current "released" version of aRpsDCA is 1.1.0 and is available from [CRAN](
 
 Several critical issues have since been corrected; until the official release of aRpsDCA 1.1.1 it is recommended to retrieve the current pre-release version from github using the devtools library:  
 ```R
+install.packages('devtools')
 devtools::install_github('derrickturk/aRpsDCA')
 ```
 
