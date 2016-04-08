@@ -25,5 +25,6 @@ v1.0.0 (2014-04-03): initial release
 v1.0.1 (2015-06-21): S3 methods for formatting now correctly print curve family; handling of Np for D = 0 is corrected  
 v1.0.2 (2016-01-06): evaluation of hyperbolic-to-exponential declines with Di = Df now handled correctly  
 v1.1.0 (2016-04-04): Arps declines with linear initial buildup periods, and fitting to interval-volume data; additional bug fixes for daily data and better initial guesses for decline parameters
+v1.1.1 (2016-xx-xx): EUR for declines with buildup now handled correctly; zero results from arps.q and arps.Np when decline with buildup was passed with only post-buildup time values are now corrected
 
 (c) 2016 [dwt](http://www.github.com/derrickturk) | [terminus data science, LLC](http://www.terminusdatascience.com)
