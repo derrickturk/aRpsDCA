@@ -1,4 +1,5 @@
 importFrom(stats, nlminb)
+importFrom(methods, is)
 
 export(
     exponential.q,
