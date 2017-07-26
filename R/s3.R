@@ -126,8 +126,8 @@ arps.with.buildup <- function(decl, initial.rate, time.to.peak)
 
 arps.q.buildup <- function(decl, t)
 {
-    which.buildup <- which(t <= decl$time.to.peak)
-    which.decline <- which(t > decl$time.to.peak)
+    which.buildup <- which(t < decl$time.to.peak)
+    which.decline <- which(t >= decl$time.to.peak)
     res <- numeric(length(t))
     buildup.m <- (decl$peak.rate - decl$initial.rate) / decl$time.to.peak
     res[which.buildup] <- buildup.m * t[which.buildup] + decl$initial.rate
@@ -137,8 +137,8 @@ arps.q.buildup <- function(decl, t)
 
 arps.Np.buildup <- function(decl, t)
 {
-    which.buildup <- which(t <= decl$time.to.peak)
-    which.decline <- which(t > decl$time.to.peak)
+    which.buildup <- which(t < decl$time.to.peak)
+    which.decline <- which(t >= decl$time.to.peak)
     res <- numeric(length(t))
     buildup.m <- (decl$peak.rate - decl$initial.rate) / decl$time.to.peak
     res[which.buildup] <- buildup.m * t[which.buildup]^2 * 0.5 +
@@ -153,7 +153,7 @@ arps.Np.buildup <- function(decl, t)
 arps.D.buildup <- function(decl, t)
 {
     which.buildup <- which(t < decl$time.to.peak)
-    which.decline <- which(t > decl$time.to.peak)
+    which.decline <- which(t >= decl$time.to.peak)
     res <- numeric(length(t))
     res[which.buildup] <- NA
     res[which.decline] <- arps.D(decl$decline, t[which.decline])
